@@ -10,9 +10,21 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  firebase_core: ^2.31.1
-  firebase_core_web: ^2.17.0
-  firebase_remote_config_platform_interface: ^1.4.34
+  firebase_core:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_core/firebase_core
+  firebase_core_web:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_core/firebase_core_web
+  firebase_remote_config_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_remote_config/firebase_remote_config_platform_interface
   flutter:
     sdk: flutter
   flutter_web_plugins:
@@ -20,7 +32,11 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.3.3
-  firebase_core_platform_interface: ^5.0.0
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_core/firebase_core_platform_interface
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0

@@ -13,10 +13,26 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  firebase_core: ^2.31.1
-  firebase_core_platform_interface: ^5.0.0
-  firebase_database_platform_interface: ^0.2.5+34
-  firebase_database_web: ^0.2.5+6
+  firebase_core:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_core/firebase_core
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_core/firebase_core_platform_interface
+  firebase_database_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_database/firebase_database_platform_interface
+  firebase_database_web:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: sbifx/v2.31.1
+      path: packages/firebase_database/firebase_database_web
   flutter:
     sdk: flutter
 

@@ -9,6 +9,8 @@
 
 #import "FLTFirebaseMessagingPlugin.h"
 
+@import FirebaseAuth;
+
 NSString *const kFLTFirebaseMessagingChannelName = @"plugins.flutter.io/firebase_messaging";
 
 NSString *const kMessagingArgumentCode = @"code";

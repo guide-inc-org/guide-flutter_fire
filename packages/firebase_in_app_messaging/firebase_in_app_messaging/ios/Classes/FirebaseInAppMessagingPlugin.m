@@ -4,7 +4,7 @@
 
 #import "FirebaseInAppMessagingPlugin.h"
 
-#import <Firebase/Firebase.h>
+@import FirebaseInAppMessaging;
 #import <firebase_core/FLTFirebasePluginRegistry.h>
 
 NSString *const kFLTFirebaseInAppMessagingChannelName =

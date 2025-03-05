@@ -2,10 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import <FirebaseAppCheck/FIRAppCheck.h>
-
-#import <Firebase/Firebase.h>
-#import <FirebaseAppCheck/FIRAppCheck.h>
+@import FirebaseCore;
+@import FirebaseAppCheck;
 #import "FLTAppCheckProviderFactory.h"
 
 #import "FLTAppCheckProvider.h"

@@ -4,7 +4,7 @@
 
 #import "FLTFirebasePerformancePlugin.h"
 
-#import <Firebase/Firebase.h>
+@import FirebasePerformance;
 
 #import <firebase_core/FLTFirebasePluginRegistry.h>
 

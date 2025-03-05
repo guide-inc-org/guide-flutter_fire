@@ -6,7 +6,7 @@
 #import "Crashlytics_Platform.h"
 #import "ExceptionModel_Platform.h"
 
-#import <Firebase/Firebase.h>
+@import FirebaseCrashlytics;
 
 #if TARGET_OS_OSX
 // macOS platform does not support analytics
