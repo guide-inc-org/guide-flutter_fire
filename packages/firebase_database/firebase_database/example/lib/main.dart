@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (transactionResult.committed) {
         final newMessageRef = _messagesRef.push();
         await newMessageRef.set(<String, String>{
-          _kTestKey: '$_kTestValue ${transactionResult.snapshot.value}'
+          _kTestKey: '$_kTestValue ${transactionResult.snapshot.value}',
         });
       }
     } on FirebaseException catch (e) {
@@ -222,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () => _deleteMessage(snapshot),
                       icon: const Icon(Icons.delete),
                     ),
-                    title: Text('$index: ${snapshot.value.toString()}'),
+                    title: Text('$index: ${snapshot.value}'),
                   ),
                 );
               },

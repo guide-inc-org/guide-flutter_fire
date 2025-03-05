@@ -17,7 +17,7 @@ import 'package:flutter/services.dart';
 Never convertPlatformException(
   Object exception,
   StackTrace stackTrace, {
-  bool fromPigeon = false,
+  bool fromPigeon = true,
 }) {
   if (exception is! PlatformException) {
     Error.throwWithStackTrace(exception, stackTrace);
@@ -34,18 +34,67 @@ Never convertPlatformException(
 /// A [PlatformException] can only be converted to a [FirebaseAuthException] if
 /// the `details` of the exception exist. Firebase returns specific codes and
 /// messages which can be converted into user friendly exceptions.
-// TODO(rousselGit): Should this return a FirebaseAuthException to avoid having to cast?
 FirebaseException platformExceptionToFirebaseAuthException(
   PlatformException platformException, {
-  bool fromPigeon = false,
+  bool fromPigeon = true,
 }) {
   if (fromPigeon) {
+    var code = platformException.code
+        .replaceAll('ERROR_', '')
+        .toLowerCase()
+        .replaceAll('_', '-');
+
+    final customCode = _getCustomCode(
+      platformException.details,
+      platformException.message,
+    );
+    if (customCode != null) {
+      code = customCode;
+    }
+
+    if (code.isNotEmpty) {
+      if (code == kMultiFactorError) {
+        return parseMultiFactorError(platformException);
+      }
+    }
+
+    AuthCredential? credential;
+    String? email;
+
+    if (platformException.details != null) {
+      if (platformException.details['authCredential'] != null &&
+          platformException.details['authCredential'] is PigeonAuthCredential) {
+        PigeonAuthCredential pigeonAuthCredential =
+            platformException.details['authCredential'];
+
+        credential = AuthCredential(
+          providerId: pigeonAuthCredential.providerId,
+          signInMethod: pigeonAuthCredential.signInMethod,
+          token: pigeonAuthCredential.nativeId,
+          accessToken: pigeonAuthCredential.accessToken,
+        );
+      }
+
+      if (platformException.details['email'] != null) {
+        email = platformException.details['email'];
+      }
+    }
+
+    var parsedMessage = platformException.message?.split(': ').last;
+    if (parsedMessage?.endsWith(' ]') ?? false) {
+      // Fixes JSON response from Auth blocking function: https://github.com/firebase/flutterfire/issues/11532
+      parsedMessage = parsedMessage!.substring(0, parsedMessage.length - 2);
+    }
+
     return FirebaseAuthException(
-      code: platformException.code,
-      // Remove leading classname from message
-      message: platformException.message?.split(': ').last,
+      code: code,
+      message: parsedMessage,
+      credential: credential,
+      email: email,
     );
   }
+
+  // Parsing code to match the format of the other platforms
 
   Map<String, dynamic>? details = platformException.details != null
       ? Map<String, dynamic>.from(platformException.details)
@@ -58,25 +107,31 @@ FirebaseException platformExceptionToFirebaseAuthException(
 
   if (details != null) {
     code = details['code'] ?? code;
-    if (code == 'second-factor-required') {
-      return parseMultiFactorError(details);
+    if (code == kMultiFactorError) {
+      return parseMultiFactorError(platformException);
     }
 
     message = details['message'] ?? message;
 
-    if (details['additionalData'] != null) {
-      if (details['additionalData']['authCredential'] != null) {
+    final additionalData = details['additionalData'];
+
+    if (additionalData != null) {
+      if (additionalData['authCredential'] != null) {
         credential = AuthCredential(
-          providerId: details['additionalData']['authCredential']['providerId'],
-          signInMethod: details['additionalData']['authCredential']
-              ['signInMethod'],
-          token: details['additionalData']['authCredential']['token'],
+          providerId: additionalData['authCredential']['providerId'],
+          signInMethod: additionalData['authCredential']['signInMethod'],
+          token: additionalData['authCredential']['token'],
         );
       }
 
-      if (details['additionalData']['email'] != null) {
-        email = details['additionalData']['email'];
+      if (additionalData['email'] != null) {
+        email = additionalData['email'];
       }
+    }
+
+    final customCode = _getCustomCode(additionalData, message);
+    if (customCode != null) {
+      code = customCode;
     }
   }
   return FirebaseAuthException(
@@ -87,11 +142,33 @@ FirebaseException platformExceptionToFirebaseAuthException(
   );
 }
 
+// Check for custom error codes that are not returned in the normal errors by Firebase SDKs
+// The error code is only returned in a String on Android
+String? _getCustomCode(Map? additionalData, String? message) {
+  final listOfRecognizedCode = [
+    // This code happens when using Enumerate Email protection
+    'INVALID_LOGIN_CREDENTIALS',
+    // This code happens when using using pre-auth functions
+    'BLOCKING_FUNCTION_ERROR_RESPONSE',
+  ];
+
+  for (final recognizedCode in listOfRecognizedCode) {
+    if (additionalData?['message'] == recognizedCode ||
+        (message?.contains(recognizedCode) ?? false)) {
+      return recognizedCode;
+    }
+  }
+
+  return null;
+}
+
+const kMultiFactorError = 'second-factor-required';
+
 FirebaseAuthMultiFactorExceptionPlatform parseMultiFactorError(
-    Map<String, Object?> details) {
-  final code = details['code'] as String?;
-  final message = details['message'] as String?;
-  final additionalData = details['additionalData'] as Map<Object?, Object?>?;
+    PlatformException exception) {
+  const code = kMultiFactorError;
+  final message = exception.message;
+  final additionalData = exception.details as Map<Object?, Object?>?;
 
   if (additionalData == null) {
     throw FirebaseAuthException(
@@ -117,7 +194,7 @@ FirebaseAuthMultiFactorExceptionPlatform parseMultiFactorError(
 
   if (auth == null) {
     throw FirebaseAuthException(
-      code: code ?? 'Unknown',
+      code: code,
       message: message,
     );
   }
@@ -138,7 +215,7 @@ FirebaseAuthMultiFactorExceptionPlatform parseMultiFactorError(
   );
 
   return FirebaseAuthMultiFactorExceptionPlatform(
-    code: code ?? 'Unknown',
+    code: code,
     message: message,
     resolver: multiFactorResolver,
   );

@@ -1,3 +1,179 @@
+## 0.2.5+6
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+5
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+4
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+3
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+2
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+1
+
+ - **FIX**(app-installations,android): update deprecated API to latest Task implementation ([#12579](https://github.com/firebase/flutterfire/issues/12579)). ([88d86e9a](https://github.com/firebase/flutterfire/commit/88d86e9a375cbb57c9fdbba965b75be4dc17376c))
+
+## 0.2.5
+
+ - **FEAT**(android): Bump `compileSdk` version of Android plugins to latest stable (34) ([#12566](https://github.com/firebase/flutterfire/issues/12566)). ([e891fab2](https://github.com/firebase/flutterfire/commit/e891fab291e9beebc223000b133a6097e066a7fc))
+
+## 0.2.4+19
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+18
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+17
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+16
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+15
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+14
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+13
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+12
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+11
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+10
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+9
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 0.2.4+8
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+7
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+6
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+5
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+4
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+3
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+2
+
+ - Update a dependency to the latest release.
+
+## 0.2.4+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.4
+
+ - **FEAT**: Full support of AGP 8 ([#11699](https://github.com/firebase/flutterfire/issues/11699)). ([bdb5b270](https://github.com/firebase/flutterfire/commit/bdb5b27084d225809883bdaa6aa5954650551927))
+
+## 0.2.3+7
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+6
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+5
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+4
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+3
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+2
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.3
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 0.2.2+2
+
+ - **FIX**: add support for AGP 8.0 ([#10901](https://github.com/firebase/flutterfire/issues/10901)). ([a3b96735](https://github.com/firebase/flutterfire/commit/a3b967354294c295a9be8d699a6adb7f4b1dba7f))
+
+## 0.2.2+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.2
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 0.2.1+14
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+13
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+12
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+11
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+10
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+9
+
+ - **REFACTOR**: upgrade project to remove warnings from Flutter 3.7 ([#10344](https://github.com/firebase/flutterfire/issues/10344)). ([e0087c84](https://github.com/firebase/flutterfire/commit/e0087c845c7526c11a4241a26d39d4673b0ad29d))
+
 ## 0.2.1+8
 
  - Update a dependency to the latest release.

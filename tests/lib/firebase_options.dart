@@ -30,6 +30,8 @@ class DefaultFirebaseOptions {
         return ios;
       case TargetPlatform.macOS:
         return macos;
+      case TargetPlatform.windows:
+        return android;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -67,8 +69,6 @@ class DefaultFirebaseOptions {
     databaseURL:
         'https://flutterfire-e2e-tests-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutterfire-e2e-tests.appspot.com',
-    androidClientId:
-        '406099696497-tvtvuiqogct1gs1s6lh114jeps7hpjm5.apps.googleusercontent.com',
     iosClientId:
         '406099696497-taeapvle10rf355ljcvq5dt134mkghmp.apps.googleusercontent.com',
     iosBundleId: 'io.flutter.plugins.firebase.tests',
@@ -82,8 +82,6 @@ class DefaultFirebaseOptions {
     databaseURL:
         'https://flutterfire-e2e-tests-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutterfire-e2e-tests.appspot.com',
-    androidClientId:
-        '406099696497-tvtvuiqogct1gs1s6lh114jeps7hpjm5.apps.googleusercontent.com',
     iosClientId:
         '406099696497-taeapvle10rf355ljcvq5dt134mkghmp.apps.googleusercontent.com',
     iosBundleId: 'io.flutter.plugins.firebase.tests',

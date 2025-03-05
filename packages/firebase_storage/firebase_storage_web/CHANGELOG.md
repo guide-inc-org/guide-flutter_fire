@@ -1,3 +1,184 @@
+## 3.9.6
+
+ - Update a dependency to the latest release.
+
+## 3.9.5
+
+ - Update a dependency to the latest release.
+
+## 3.9.4
+
+ - Update a dependency to the latest release.
+
+## 3.9.3
+
+ - Update a dependency to the latest release.
+
+## 3.9.2
+
+ - Update a dependency to the latest release.
+
+## 3.9.1
+
+ - **FIX**(web): fix typing conversion for Maps ([#12615](https://github.com/firebase/flutterfire/issues/12615)). ([2cc16189](https://github.com/firebase/flutterfire/commit/2cc161898573736216dbf6cba25c4951e571fa13))
+
+## 3.9.0
+
+ - **FEAT**(web): remove the dependency on `package:js` in favor of `dart:js_interop` ([#12534](https://github.com/firebase/flutterfire/issues/12534)). ([d83f6327](https://github.com/firebase/flutterfire/commit/d83f632753707c974fef2ac8a7f9bf6cb8ba8758))
+
+## 3.8.1
+
+ - Update a dependency to the latest release.
+
+## 3.8.0
+
+ - **FEAT**: update `web` package to 0.5.1 ([#12469](https://github.com/firebase/flutterfire/issues/12469)). ([f5c4354a](https://github.com/firebase/flutterfire/commit/f5c4354a66377da9d231c5e3fc7e955ddb7ef8cf))
+
+## 3.7.3
+
+ - Update a dependency to the latest release.
+
+## 3.7.2
+
+ - Update a dependency to the latest release.
+
+## 3.7.1
+
+ - Update a dependency to the latest release.
+
+## 3.7.0
+
+ - **FIX**(storage,web): fixed web stream handlers, e2e web tests, incorrect NativeError being thrown instead of FirebaseException on web ([#12319](https://github.com/firebase/flutterfire/issues/12319)). ([d32b5a93](https://github.com/firebase/flutterfire/commit/d32b5a936cfb05fbeeff199248474c23af293a3c))
+ - **FEAT**(storage,web): migrate web to js_interop to be compatible with WASM ([#12202](https://github.com/firebase/flutterfire/issues/12202)). ([7cae803a](https://github.com/firebase/flutterfire/commit/7cae803a3f5e146cd53b2a313b61417a12de52dc))
+
+## 3.6.22
+
+ - Update a dependency to the latest release.
+
+## 3.6.21
+
+ - Update a dependency to the latest release.
+
+## 3.6.20
+
+ - Update a dependency to the latest release.
+
+## 3.6.19
+
+ - Update a dependency to the latest release.
+
+## 3.6.18
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 3.6.17
+
+ - Update a dependency to the latest release.
+
+## 3.6.16
+
+ - Update a dependency to the latest release.
+
+## 3.6.15
+
+ - Update a dependency to the latest release.
+
+## 3.6.14
+
+ - Update a dependency to the latest release.
+
+## 3.6.13
+
+ - Update a dependency to the latest release.
+
+## 3.6.12
+
+ - Update a dependency to the latest release.
+
+## 3.6.11
+
+ - Update a dependency to the latest release.
+
+## 3.6.10
+
+ - Update a dependency to the latest release.
+
+## 3.6.9
+
+ - Update a dependency to the latest release.
+
+## 3.6.8
+
+ - Update a dependency to the latest release.
+
+## 3.6.7
+
+ - Update a dependency to the latest release.
+
+## 3.6.6
+
+ - Update a dependency to the latest release.
+
+## 3.6.5
+
+ - Update a dependency to the latest release.
+
+## 3.6.4
+
+ - **FIX**(firebase_storage): updated `firebase_storage_web` to allow  `http` package dependency range '>=0.13.0 <2.0.0'. Fixes dependency resolution. ([#11158](https://github.com/firebase/flutterfire/issues/11158)). ([7d0ca257](https://github.com/firebase/flutterfire/commit/7d0ca25737cf261eaff79fc3c29ce47c4526e6b8))
+
+## 3.6.3
+
+ - Update a dependency to the latest release.
+
+## 3.6.2
+
+ - Update a dependency to the latest release.
+
+## 3.6.1
+
+ - Update a dependency to the latest release.
+
+## 3.6.0
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 3.5.0
+
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 3.4.1
+
+ - Update a dependency to the latest release.
+
+## 3.4.0
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 3.3.25
+
+ - **FIX**(firebase_storage_web): fix `Error: Unexpected null value.` when `metadata.timeCreated` or `metadata.updated` ([#10577](https://github.com/firebase/flutterfire/issues/10577)). ([6eb235ba](https://github.com/firebase/flutterfire/commit/6eb235ba1d6805eb142469d6566b665e0e531e77))
+
+## 3.3.24
+
+ - Update a dependency to the latest release.
+
+## 3.3.23
+
+ - Update a dependency to the latest release.
+
+## 3.3.22
+
+ - Update a dependency to the latest release.
+
+## 3.3.21
+
+ - Update a dependency to the latest release.
+
+## 3.3.20
+
+ - Update a dependency to the latest release.
+
 ## 3.3.19
 
  - Update a dependency to the latest release.

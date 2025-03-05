@@ -175,31 +175,32 @@ Here's how to add a Firebase Flutter plugin:
     flutter run
     ```
 
-You’re all set! Your Flutter apps are registered and configured to use Firebase.
+You're all set! Your Flutter apps are registered and configured to use Firebase.
 
 
 ### Available plugins {: #available-plugins}
 
 {% setvar YES %}<div class="center compare-yes"></div>{% endsetvar %}
 
-Product                                          | Plugin name                    | iOS     | Android | Web     | Other Apple<br>(macOS, etc.)
--------------------------------------------------|--------------------------------|---------|---------|---------|--------------------------
-[{{analytics}}][analytics docs]                  | `firebase_analytics`           | {{YES}} | {{YES}} | {{YES}} | beta
-[{{app_check}}][app check docs]                  | `firebase_app_check`           | {{YES}} | {{YES}} | {{YES}} | beta
-[{{auth}}][auth docs]                            | `firebase_auth`                | {{YES}} | {{YES}} | {{YES}} | beta
-[{{firestore}}][firestore docs]                  | `cloud_firestore`              | {{YES}} | {{YES}} | {{YES}} | beta
-[{{cloud_functions}}][functions docs]            | `cloud_functions`              | {{YES}} | {{YES}} | {{YES}} | beta
-[{{messaging_longer}}][fcm docs]                 | `firebase_messaging`           | {{YES}} | {{YES}} | {{YES}} | beta
-[{{storage}}][storage docs]                      | `firebase_storage`             | {{YES}} | {{YES}} | {{YES}} | beta
-[{{crashlytics}}][crashlytics docs]              | `firebase_crashlytics`         | {{YES}} | {{YES}} |         | beta
-[{{ddls}}][ddls docs]                            | `firebase_dynamic_links`       | {{YES}} | {{YES}} |         |
-[{{inappmessaging}}][fiam docs]                  | `firebase_in_app_messaging`    | {{YES}} | {{YES}} |         |
-[{{firebase_installations}}][installations docs] | `firebase_app_installations`   | {{YES}} | {{YES}} | {{YES}} | beta
-[ML Model Downloader][ml docs]                   | `firebase_ml_model_downloader` | {{YES}} | {{YES}} |         | beta
-[{{perfmon}}][perfmon docs]                      | `firebase_performance`         | {{YES}} | {{YES}} | {{YES}} |
-[{{database}}][rtdb docs]                        | `firebase_database`            | {{YES}} | {{YES}} | {{YES}} | beta
-[{{remote_config}}][remote config docs]          | `firebase_remote_config`       | {{YES}} | {{YES}} | {{YES}} | beta
+Product                                          | Plugin name                    | iOS     | Android | Web     | Other Apple<br>(macOS, etc.) | Windows
+-------------------------------------------------|--------------------------------|---------|---------|---------|--------------------------|--------
+[{{analytics}}][analytics docs]                  | `firebase_analytics`           | {{YES}} | {{YES}} | {{YES}} | beta |
+[{{app_check}}][app check docs]                  | `firebase_app_check`           | {{YES}} | {{YES}} | {{YES}} | beta |
+[{{auth}}][auth docs]                            | `firebase_auth`                | {{YES}} | {{YES}} | {{YES}} | beta | beta
+[{{firestore}}][firestore docs]                  | `cloud_firestore`              | {{YES}} | {{YES}} | {{YES}} | beta | beta
+[{{cloud_functions}}][functions docs]            | `cloud_functions`              | {{YES}} | {{YES}} | {{YES}} | beta |
+[{{messaging_longer}}][fcm docs]                 | `firebase_messaging`           | {{YES}} | {{YES}} | {{YES}} | beta |
+[{{storage}}][storage docs]                      | `firebase_storage`             | {{YES}} | {{YES}} | {{YES}} | beta | beta
+[{{crashlytics}}][crashlytics docs]              | `firebase_crashlytics`         | {{YES}} | {{YES}} |         | beta |
+[{{ddls}}][ddls docs]                            | `firebase_dynamic_links`       | {{YES}} | {{YES}} |         | |
+[{{inappmessaging}}][fiam docs]                  | `firebase_in_app_messaging`    | {{YES}} | {{YES}} |         | |
+[{{firebase_installations}}][installations docs] | `firebase_app_installations`   | {{YES}} | {{YES}} | {{YES}} | beta |
+[ML Model Downloader][ml docs]                   | `firebase_ml_model_downloader` | {{YES}} | {{YES}} |         | beta |
+[{{perfmon}}][perfmon docs]                      | `firebase_performance`         | {{YES}} | {{YES}} | {{YES}} | |
+[{{database}}][rtdb docs]                        | `firebase_database`            | {{YES}} | {{YES}} | {{YES}} | beta |
+[{{remote_config}}][remote config docs]          | `firebase_remote_config`       | {{YES}} | {{YES}} | {{YES}} | beta |
 
+Caution: Firebase on Windows is not intended for production use cases, only local development workflows.
 
 ## Try out an example app with {{analytics}} {: #try-analytics-example-app}
 
@@ -237,6 +238,60 @@ For more information about setting up {{analytics}}, visit the getting started
 guides for [iOS+](/docs/analytics/get-started?platform=ios),
 [Android](/docs/analytics/get-started?platform=android), and
 [web](/docs/analytics/get-started?platform=web).
+
+
+{% dynamic if request.query_string.platform == "web" %}
+## Notes on building web apps {:#web-notes}
+
+### Trusted Types support {:#trusted-types}
+
+The Firebase SDK for Flutter supports using Trusted Types to help prevent
+DOM-based (client-side) XSS attacks. When you
+[enable Trusted Type enforcement](https://web.dev/trusted-types/#switch-to-enforcing-content-security-policy){:.external}
+for your app, the Firebase SDK injects its scripts into the DOM using custom
+Trusted Type policies, named `flutterfire-firebase_core`,
+`flutterfire-firebase_auth`, and so on.
+
+### Disable Firebase JavaScript SDK auto-injection {:#disable-auto}
+
+By default, the Firebase Flutter SDK auto-injects the Firebase JavaScript SDK when building for the web. If you don't want the Firebase JavaScript SDK to be auto-injected, you can do the following:
+
+1.  Ignore the auto-injection script by adding the following property inside a
+    `<script>` tag within the `web/index.html` file in your Flutter project:
+
+    ```html
+    <!-- Add this property inside a <script> tag within your "web/index.html" file in your Flutter project -->
+    <!-- Put in the names of all the plugins you wish to ignore: -->
+    window.flutterfire_ignore_scripts = ['analytics', 'firestore'];
+    ```
+
+2.  Load the script manually using one of the following alternatives:
+
+    - Add the SDK explicitly to your `web/index.html` file, inside the `window.addEventListener` callback:
+
+      ```js
+        window.addEventListener('load', async function (ev) {
+          window.firebase_firestore = await import("https://www.gstatic.com/firebasejs/{{web_sdk_version}}/firebase-firestore.js");
+          window.firebase_analytics = await import("https://www.gstatic.com/firebasejs/{{web_sdk_version}}/firebase-analytics.js");
+          
+          _flutter.loader.loadEntrypoint().then(function (engineInitializer) {
+            // rest of the code
+      ```
+
+    - Or, download the plugin's Firebase JavaScript SDK code from the "gstatic" domain,
+      and save them to a JavaScript file to be kept within your project and loaded in manually:
+
+      ```js
+        // "web/my-analytics.js" & "web/my-firestore.js" file loaded as a script into your "web/index.html" file: 
+        window.addEventListener('load', async function (ev) {
+          window.firebase_analytics = await import("./my-analytics.js");
+          window.firebase_firestore = await import("./my-firestore.js");
+          
+          _flutter.loader.loadEntrypoint().then(function (engineInitializer) {
+            // rest of the code
+      ```
+
+{% dynamic endif %}
 
 
 ## Next steps

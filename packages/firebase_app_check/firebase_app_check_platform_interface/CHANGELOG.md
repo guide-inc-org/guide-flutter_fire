@@ -1,3 +1,190 @@
+## 0.1.0+28
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+27
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+26
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+25
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+24
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+23
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+22
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+21
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+20
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+19
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+18
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+17
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+16
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+15
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+14
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+13
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+12
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+11
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+10
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+9
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+8
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+7
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+6
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+5
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+4
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+3
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+2
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+1
+
+ - Update a dependency to the latest release.
+
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(app-check,web): support for `ReCaptchaEnterpriseProvider`. User facing API updated. ([#11573](https://github.com/firebase/flutterfire/issues/11573)). ([09825edd](https://github.com/firebase/flutterfire/commit/09825edd0e1ecd609e2046fdefda439ce4099087))
+
+## 0.0.9+2
+
+ - **FIX**(firebase_app_check): fix typo in code comment ([#11207](https://github.com/firebase/flutterfire/issues/11207)). ([57225a91](https://github.com/firebase/flutterfire/commit/57225a9104b0af7b9da274a90d68372c224dd7be))
+
+## 0.0.9+1
+
+ - Update a dependency to the latest release.
+
+## 0.0.9
+
+ - **FEAT**(app-check): support for `getLimitedUseToken()` API ([#11091](https://github.com/firebase/flutterfire/issues/11091)). ([9db9326f](https://github.com/firebase/flutterfire/commit/9db9326fe503c31299c9685449150e809543974e))
+
+## 0.0.8+3
+
+ - Update a dependency to the latest release.
+
+## 0.0.8+2
+
+ - Update a dependency to the latest release.
+
+## 0.0.8+1
+
+ - Update a dependency to the latest release.
+
+## 0.0.8
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+ - **FEAT**: update librairies to be compatible with Flutter 3.10.0 ([#10944](https://github.com/firebase/flutterfire/issues/10944)). ([e1f5a5ea](https://github.com/firebase/flutterfire/commit/e1f5a5ea798c54f19d1d2f7b8f2250f8819f44b7))
+
+## 0.0.7
+
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 0.0.6+2
+
+ - **FIX**(app-check): use correct `getAppCheckToken()` method. Print out debug token for iOS. ([#10819](https://github.com/firebase/flutterfire/issues/10819)). ([66909a9c](https://github.com/firebase/flutterfire/commit/66909a9c5b10e85f93565cbc308fdbee4ec6f607))
+
+## 0.0.6+1
+
+ - Update a dependency to the latest release.
+
+## 0.0.6
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 0.0.5+17
+
+ - Update a dependency to the latest release.
+
+## 0.0.5+16
+
+ - Update a dependency to the latest release.
+
+## 0.0.5+15
+
+ - Update a dependency to the latest release.
+
+## 0.0.5+14
+
+ - Update a dependency to the latest release.
+
+## 0.0.5+13
+
+ - Update a dependency to the latest release.
+
+## 0.0.5+12
+
+ - Update a dependency to the latest release.
+
 ## 0.0.5+11
 
  - Update a dependency to the latest release.

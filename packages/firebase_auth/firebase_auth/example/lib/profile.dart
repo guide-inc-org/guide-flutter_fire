@@ -4,7 +4,9 @@
 
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -14,7 +16,7 @@ import 'auth.dart';
 const placeholderImage =
     'https://upload.wikimedia.org/wikipedia/commons/c/cd/Portrait_Placeholder_Square.png';
 
-/// Profile page shows after sign in or registerationg
+/// Profile page shows after sign in or registration.
 class ProfilePage extends StatefulWidget {
   // ignore: public_member_api_docs
   const ProfilePage({Key? key}) : super(key: key);
@@ -36,12 +38,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    user = FirebaseAuth.instance.currentUser!;
+    user = auth.currentUser!;
     controller = TextEditingController(text: user.displayName);
 
     controller.addListener(_onNameChanged);
 
-    FirebaseAuth.instance.userChanges().listen((event) {
+    auth.userChanges().listen((event) {
       if (event != null && mounted) {
         setState(() {
           user = event;
@@ -101,144 +103,221 @@ class _ProfilePageState extends State<ProfilePage> {
             Center(
               child: SizedBox(
                 width: 400,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          maxRadius: 60,
-                          backgroundImage: NetworkImage(
-                            user.photoURL ?? placeholderImage,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            maxRadius: 60,
+                            backgroundImage: NetworkImage(
+                              user.photoURL ?? placeholderImage,
+                            ),
                           ),
-                        ),
-                        Positioned.directional(
-                          textDirection: Directionality.of(context),
-                          end: 0,
-                          bottom: 0,
-                          child: Material(
-                            clipBehavior: Clip.antiAlias,
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(40),
-                            child: InkWell(
-                              onTap: () async {
-                                final photoURL = await getPhotoURLFromUser();
+                          Positioned.directional(
+                            textDirection: Directionality.of(context),
+                            end: 0,
+                            bottom: 0,
+                            child: Material(
+                              clipBehavior: Clip.antiAlias,
+                              color: Theme.of(context).colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(40),
+                              child: InkWell(
+                                onTap: () async {
+                                  final photoURL = await getPhotoURLFromUser();
 
-                                if (photoURL != null) {
-                                  await user.updatePhotoURL(photoURL);
-                                }
-                              },
-                              radius: 50,
-                              child: const SizedBox(
-                                width: 35,
-                                height: 35,
-                                child: Icon(Icons.edit),
+                                  if (photoURL != null) {
+                                    await user.updatePhotoURL(photoURL);
+                                  }
+                                },
+                                radius: 50,
+                                child: const SizedBox(
+                                  width: 35,
+                                  height: 35,
+                                  child: Icon(Icons.edit),
+                                ),
                               ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      textAlign: TextAlign.center,
-                      controller: controller,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        alignLabelWithHint: true,
-                        label: Center(
-                          child: Text(
-                            'Click to add a display name',
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        textAlign: TextAlign.center,
+                        controller: controller,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          alignLabelWithHint: true,
+                          label: Center(
+                            child: Text(
+                              'Click to add a display name',
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Text(user.email ?? user.phoneNumber ?? 'User'),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (userProviders.contains('phone'))
-                          const Icon(Icons.phone),
-                        if (userProviders.contains('password'))
-                          const Icon(Icons.mail),
-                        if (userProviders.contains('google.com'))
-                          SizedBox(
-                            width: 24,
-                            child: Image.network(
-                              'https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png',
+                      Text(user.email ?? user.phoneNumber ?? 'User'),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (userProviders.contains('phone'))
+                            const Icon(Icons.phone),
+                          if (userProviders.contains('password'))
+                            const Icon(Icons.mail),
+                          if (userProviders.contains('google.com'))
+                            SizedBox(
+                              width: 24,
+                              child: Image.network(
+                                'https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png',
+                              ),
                             ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: () {
-                        user.sendEmailVerification();
-                      },
-                      child: const Text('Verify Email'),
-                    ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: () async {
-                        final a = await user.multiFactor.getEnrolledFactors();
-                        print(a);
-                      },
-                      child: const Text('Get enrolled factors'),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: phoneController,
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.phone),
-                        hintText: '+33612345678',
-                        labelText: 'Phone number',
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: () async {
-                        final session = await user.multiFactor.getSession();
-                        final auth = FirebaseAuth.instance;
-                        await auth.verifyPhoneNumber(
-                          multiFactorSession: session,
-                          phoneNumber: phoneController.text,
-                          verificationCompleted: (_) {},
-                          verificationFailed: print,
-                          codeSent:
-                              (String verificationId, int? resendToken) async {
-                            final smsCode = await getSmsCodeFromUser(context);
+                      const SizedBox(height: 20),
+                      TextButton(
+                        onPressed: () {
+                          user.sendEmailVerification();
+                        },
+                        child: const Text('Verify Email'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          final a = await user.multiFactor.getEnrolledFactors();
+                          print(a);
+                        },
+                        child: const Text('Get enrolled factors'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          if (AuthGate.appleAuthorizationCode != null) {
+                            // The `authorizationCode` is on the user credential.
+                            // e.g. final authorizationCode = userCredential.additionalUserInfo?.authorizationCode;
+                            await FirebaseAuth.instance
+                                .revokeTokenWithAuthorizationCode(
+                              AuthGate.appleAuthorizationCode!,
+                            );
+                            // You may wish to delete the user at this point
+                            AuthGate.appleAuthorizationCode = null;
+                          } else {
+                            print(
+                              'Apple `authorizationCode` is null, cannot revoke token.',
+                            );
+                          }
+                        },
+                        child: const Text('Revoke Apple auth token'),
+                      ),
+                      TextFormField(
+                        controller: phoneController,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.phone),
+                          hintText: '+33612345678',
+                          labelText: 'Phone number',
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextButton(
+                        onPressed: () async {
+                          final session = await user.multiFactor.getSession();
+                          await auth.verifyPhoneNumber(
+                            multiFactorSession: session,
+                            phoneNumber: phoneController.text,
+                            verificationCompleted: (_) {},
+                            verificationFailed: print,
+                            codeSent: (
+                              String verificationId,
+                              int? resendToken,
+                            ) async {
+                              final smsCode = await getSmsCodeFromUser(context);
 
-                            if (smsCode != null) {
-                              // Create a PhoneAuthCredential with the code
-                              final credential = PhoneAuthProvider.credential(
-                                verificationId: verificationId,
-                                smsCode: smsCode,
-                              );
-
-                              try {
-                                await user.multiFactor.enroll(
-                                  PhoneMultiFactorGenerator.getAssertion(
-                                    credential,
-                                  ),
+                              if (smsCode != null) {
+                                // Create a PhoneAuthCredential with the code
+                                final credential = PhoneAuthProvider.credential(
+                                  verificationId: verificationId,
+                                  smsCode: smsCode,
                                 );
-                              } on FirebaseAuthException catch (e) {
-                                print(e.message);
+
+                                try {
+                                  await user.multiFactor.enroll(
+                                    PhoneMultiFactorGenerator.getAssertion(
+                                      credential,
+                                    ),
+                                  );
+                                } on FirebaseAuthException catch (e) {
+                                  print(e.message);
+                                }
                               }
-                            }
-                          },
-                          codeAutoRetrievalTimeout: print,
-                        );
-                      },
-                      child: const Text('Verify Number For MFA'),
-                    ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: _signOut,
-                      child: const Text('Sign out'),
-                    ),
-                  ],
+                            },
+                            codeAutoRetrievalTimeout: print,
+                          );
+                        },
+                        child: const Text('Verify Number For MFA'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          final totp =
+                              (await user.multiFactor.getEnrolledFactors())
+                                  .firstWhereOrNull(
+                            (element) => element.factorId == 'totp',
+                          );
+                          if (totp != null) {
+                            await user.multiFactor.unenroll(
+                              factorUid:
+                                  (await user.multiFactor.getEnrolledFactors())
+                                      .firstWhere(
+                                        (element) => element.factorId == 'totp',
+                                      )
+                                      .uid,
+                            );
+                          }
+                          final session = await user.multiFactor.getSession();
+                          final totpSecret =
+                              await TotpMultiFactorGenerator.generateSecret(
+                            session,
+                          );
+                          print(totpSecret);
+                          final code =
+                              await getTotpFromUser(context, totpSecret);
+                          print('code: $code');
+                          if (code == null) {
+                            return;
+                          }
+                          await user.multiFactor.enroll(
+                            await TotpMultiFactorGenerator
+                                .getAssertionForEnrollment(
+                              totpSecret,
+                              code,
+                            ),
+                            displayName: 'TOTP',
+                          );
+                        },
+                        child: const Text('Enroll TOTP'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          try {
+                            final enrolledFactors =
+                                await user.multiFactor.getEnrolledFactors();
+
+                            await user.multiFactor.unenroll(
+                              factorUid: enrolledFactors.first.uid,
+                            );
+                            // Show snackbar
+                            ScaffoldSnackbar.of(context).show('MFA unenrolled');
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        child: const Text('Unenroll MFA'),
+                      ),
+                      const Divider(),
+                      TextButton(
+                        onPressed: _signOut,
+                        child: const Text('Sign out'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -255,7 +334,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: const Text('Save changes'),
                       ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -306,7 +385,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   /// Example code for sign out.
   Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await auth.signOut();
     await GoogleSignIn().signOut();
   }
 }

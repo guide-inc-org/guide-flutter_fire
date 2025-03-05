@@ -1,3 +1,172 @@
+## 4.9.5
+
+ - Update a dependency to the latest release.
+
+## 4.9.4
+
+ - Update a dependency to the latest release.
+
+## 4.9.3
+
+ - Update a dependency to the latest release.
+
+## 4.9.2
+
+ - Update a dependency to the latest release.
+
+## 4.9.1
+
+ - Update a dependency to the latest release.
+
+## 4.9.0
+
+ - **FEAT**(web): remove the dependency on `package:js` in favor of `dart:js_interop` ([#12534](https://github.com/firebase/flutterfire/issues/12534)). ([d83f6327](https://github.com/firebase/flutterfire/commit/d83f632753707c974fef2ac8a7f9bf6cb8ba8758))
+
+## 4.8.1
+
+ - Update a dependency to the latest release.
+
+## 4.8.0
+
+ - **FEAT**: update `web` package to 0.5.1 ([#12469](https://github.com/firebase/flutterfire/issues/12469)). ([f5c4354a](https://github.com/firebase/flutterfire/commit/f5c4354a66377da9d231c5e3fc7e955ddb7ef8cf))
+
+## 4.7.2
+
+ - Update a dependency to the latest release.
+
+## 4.7.1
+
+ - Update a dependency to the latest release.
+
+## 4.7.0
+
+ - **FEAT**(functions,web): migrate web to js_interop to be compatible with WASM ([#12205](https://github.com/firebase/flutterfire/issues/12205)). ([51f6563e](https://github.com/firebase/flutterfire/commit/51f6563e1c87e0de997387399a549adc341c37b1))
+
+## 4.6.16
+
+ - Update a dependency to the latest release.
+
+## 4.6.15
+
+ - Update a dependency to the latest release.
+
+## 4.6.14
+
+ - Update a dependency to the latest release.
+
+## 4.6.13
+
+ - Update a dependency to the latest release.
+
+## 4.6.12
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 4.6.11
+
+ - Update a dependency to the latest release.
+
+## 4.6.10
+
+ - Update a dependency to the latest release.
+
+## 4.6.9
+
+ - Update a dependency to the latest release.
+
+## 4.6.8
+
+ - Update a dependency to the latest release.
+
+## 4.6.7
+
+ - Update a dependency to the latest release.
+
+## 4.6.6
+
+ - Update a dependency to the latest release.
+
+## 4.6.5
+
+ - Update a dependency to the latest release.
+
+## 4.6.4
+
+ - Update a dependency to the latest release.
+
+## 4.6.3
+
+ - Update a dependency to the latest release.
+
+## 4.6.2
+
+ - Update a dependency to the latest release.
+
+## 4.6.1
+
+ - Update a dependency to the latest release.
+
+## 4.6.0
+
+ - **FEAT**(functions): pass `limitedUseAppCheckToken` option to Cloud Function ([#11402](https://github.com/firebase/flutterfire/issues/11402)). ([9fce7f28](https://github.com/firebase/flutterfire/commit/9fce7f28d7ce38cf1b59b11a111e23d31581d34c))
+
+## 4.5.4
+
+ - Update a dependency to the latest release.
+
+## 4.5.3
+
+ - Update a dependency to the latest release.
+
+## 4.5.2
+
+ - Update a dependency to the latest release.
+
+## 4.5.1
+
+ - Update a dependency to the latest release.
+
+## 4.5.0
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 4.4.2
+
+ - Update a dependency to the latest release.
+
+## 4.4.1
+
+ - Update a dependency to the latest release.
+
+## 4.4.0
+
+ - **FEAT**(functions): add support for 2nd gen functions ([#10545](https://github.com/firebase/flutterfire/issues/10545)). ([204ba39e](https://github.com/firebase/flutterfire/commit/204ba39e34864c7b8be5122fc0a7fcc98d6c8b26))
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 4.3.21
+
+ - Update a dependency to the latest release.
+
+## 4.3.20
+
+ - Update a dependency to the latest release.
+
+## 4.3.19
+
+ - Update a dependency to the latest release.
+
+## 4.3.18
+
+ - Update a dependency to the latest release.
+
+## 4.3.17
+
+ - Update a dependency to the latest release.
+
+## 4.3.16
+
+ - Update a dependency to the latest release.
+
 ## 4.3.15
 
  - Update a dependency to the latest release.

@@ -36,7 +36,7 @@ void main() {
           case 'FirebaseAppCheck#registerTokenListener':
             return 'channelName';
           case 'FirebaseAppCheck#getToken':
-            return {'token': 'test-token'};
+            return 'test-token';
           default:
             return true;
         }
@@ -68,7 +68,7 @@ void main() {
 
     test('activate', () async {
       await appCheck.activate(
-        webRecaptchaSiteKey: 'test-key',
+        webProvider: ReCaptchaV3Provider('test-key'),
       );
       expect(
         methodCallLogger,
@@ -77,7 +77,8 @@ void main() {
             'FirebaseAppCheck#activate',
             arguments: {
               'appName': defaultFirebaseAppName,
-              'androidProvider': 'playIntegrity'
+              'androidProvider': 'playIntegrity',
+              'appleProvider': 'deviceCheck',
             },
           ),
         ],
@@ -93,7 +94,7 @@ void main() {
             'FirebaseAppCheck#getToken',
             arguments: {
               'appName': defaultFirebaseAppName,
-              'forceRefresh': true
+              'forceRefresh': true,
             },
           ),
         ],

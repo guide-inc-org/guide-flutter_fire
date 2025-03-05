@@ -5,23 +5,23 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 void runInstanceTests() {
   group(
     '$FirebaseFirestore.instance',
     () {
-      late FirebaseFirestore /*?*/ firestore;
+      late FirebaseFirestore firestore;
 
       setUpAll(() async {
         firestore = FirebaseFirestore.instance;
       });
 
-      test(
+      testWidgets(
         'snapshotsInSync()',
-        () async {
+        (_) async {
           DocumentReference<Map<String, dynamic>> documentReference =
               firestore.doc('flutter-tests/insync');
 
@@ -66,9 +66,9 @@ void runInstanceTests() {
         skip: kIsWeb,
       );
 
-      test(
+      testWidgets(
         'enableNetwork()',
-        () async {
+        (_) async {
           // Write some data while online
           await firestore.enableNetwork();
           DocumentReference<Map<String, dynamic>> documentReference =
@@ -96,9 +96,9 @@ void runInstanceTests() {
         skip: kIsWeb,
       );
 
-      test(
+      testWidgets(
         'disableNetwork()',
-        () async {
+        (_) async {
           // Write some data while online
           await firestore.enableNetwork();
           DocumentReference<Map<String, dynamic>> documentReference =
@@ -120,17 +120,17 @@ void runInstanceTests() {
         skip: kIsWeb,
       );
 
-      test(
+      testWidgets(
         'waitForPendingWrites()',
-        () async {
+        (_) async {
           await firestore.waitForPendingWrites();
         },
         skip: kIsWeb,
       );
 
-      test(
+      testWidgets(
         'terminate() / clearPersistence()',
-        () async {
+        (_) async {
           // Since the firestore instance has already been used,
           // calling `clearPersistence` will throw a native error.
           // We first check it does throw as expected, then terminate
@@ -147,112 +147,170 @@ void runInstanceTests() {
           await firestore.terminate();
           await firestore.clearPersistence();
         },
-        skip: kIsWeb,
+        skip: kIsWeb || defaultTargetPlatform == TargetPlatform.windows,
       );
 
-      test('setIndexConfiguration()', () async {
-        Index index1 = Index(
-          collectionGroup: 'bar',
-          queryScope: QueryScope.collectionGroup,
-          fields: [
-            IndexField(
-              fieldPath: 'fieldPath',
-              order: Order.ascending,
-              arrayConfig: ArrayConfig.contains,
-            )
-          ],
-        );
+      testWidgets(
+        'setIndexConfiguration()',
+        (_) async {
+          Index index1 = Index(
+            collectionGroup: 'bar',
+            queryScope: QueryScope.collectionGroup,
+            fields: [
+              IndexField(
+                fieldPath: 'fieldPath',
+                order: Order.ascending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+            ],
+          );
 
-        Index index2 = Index(
-          collectionGroup: 'baz',
-          queryScope: QueryScope.collection,
-          fields: [
-            IndexField(
-              fieldPath: 'foo',
-              arrayConfig: ArrayConfig.contains,
-            ),
-            IndexField(
-              fieldPath: 'bar',
-              order: Order.descending,
-              arrayConfig: ArrayConfig.contains,
-            ),
-            IndexField(
-              fieldPath: 'baz',
-              order: Order.descending,
-              arrayConfig: ArrayConfig.contains,
-            ),
-          ],
-        );
+          Index index2 = Index(
+            collectionGroup: 'baz',
+            queryScope: QueryScope.collection,
+            fields: [
+              IndexField(
+                fieldPath: 'foo',
+                arrayConfig: ArrayConfig.contains,
+              ),
+              IndexField(
+                fieldPath: 'bar',
+                order: Order.descending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+              IndexField(
+                fieldPath: 'baz',
+                order: Order.descending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+            ],
+          );
 
-        FieldOverrides fieldOverride1 = FieldOverrides(
-          fieldPath: 'fieldPath',
-          indexes: [
-            FieldOverrideIndex(
-              queryScope: 'foo',
-              order: Order.ascending,
-              arrayConfig: ArrayConfig.contains,
-            ),
-            FieldOverrideIndex(
-              queryScope: 'bar',
-              order: Order.descending,
-              arrayConfig: ArrayConfig.contains,
-            ),
-            FieldOverrideIndex(
-              queryScope: 'baz',
-              order: Order.descending,
-            ),
-          ],
-          collectionGroup: 'bar',
-        );
-        FieldOverrides fieldOverride2 = FieldOverrides(
-          fieldPath: 'anotherField',
-          indexes: [
-            FieldOverrideIndex(
-              queryScope: 'foo',
-              order: Order.ascending,
-              arrayConfig: ArrayConfig.contains,
-            ),
-            FieldOverrideIndex(
-              queryScope: 'bar',
-              order: Order.descending,
-              arrayConfig: ArrayConfig.contains,
-            ),
-            FieldOverrideIndex(
-              queryScope: 'baz',
-              order: Order.descending,
-            ),
-          ],
-          collectionGroup: 'collectiongroup',
-        );
+          FieldOverrides fieldOverride1 = FieldOverrides(
+            fieldPath: 'fieldPath',
+            indexes: [
+              FieldOverrideIndex(
+                queryScope: 'foo',
+                order: Order.ascending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+              FieldOverrideIndex(
+                queryScope: 'bar',
+                order: Order.descending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+              FieldOverrideIndex(
+                queryScope: 'baz',
+                order: Order.descending,
+              ),
+            ],
+            collectionGroup: 'bar',
+          );
+          FieldOverrides fieldOverride2 = FieldOverrides(
+            fieldPath: 'anotherField',
+            indexes: [
+              FieldOverrideIndex(
+                queryScope: 'foo',
+                order: Order.ascending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+              FieldOverrideIndex(
+                queryScope: 'bar',
+                order: Order.descending,
+                arrayConfig: ArrayConfig.contains,
+              ),
+              FieldOverrideIndex(
+                queryScope: 'baz',
+                order: Order.descending,
+              ),
+            ],
+            collectionGroup: 'collectiongroup',
+          );
+          // ignore_for_file: deprecated_member_use
+          await firestore.setIndexConfiguration(
+            indexes: [index1, index2],
+            fieldOverrides: [fieldOverride1, fieldOverride2],
+          );
+        },
+        skip: defaultTargetPlatform == TargetPlatform.windows,
+      );
 
-        await firestore.setIndexConfiguration(
-          indexes: [index1, index2],
-          fieldOverrides: [fieldOverride1, fieldOverride2],
+      testWidgets(
+        'setIndexConfigurationFromJSON()',
+        (_) async {
+          final json = jsonEncode({
+            'indexes': [
+              {
+                'collectionGroup': 'posts',
+                'queryScope': 'COLLECTION',
+                'fields': [
+                  {'fieldPath': 'author', 'arrayConfig': 'CONTAINS'},
+                  {'fieldPath': 'timestamp', 'order': 'DESCENDING'},
+                ],
+              }
+            ],
+            'fieldOverrides': [
+              {
+                'collectionGroup': 'posts',
+                'fieldPath': 'myBigMapField',
+                'indexes': [],
+              }
+            ],
+          });
+
+          await firestore.setIndexConfigurationFromJSON(json);
+        },
+        skip: defaultTargetPlatform == TargetPlatform.windows,
+      );
+
+      testWidgets('setLoggingEnabled should resolve without issue',
+          (widgetTester) async {
+        await FirebaseFirestore.setLoggingEnabled(true);
+        await FirebaseFirestore.setLoggingEnabled(false);
+      });
+
+      testWidgets(
+          'Settings() - `persistenceEnabled` & `cacheSizeBytes` with acceptable number',
+          (widgetTester) async {
+        FirebaseFirestore.instance.settings =
+            const Settings(persistenceEnabled: true, cacheSizeBytes: 10000000);
+        // Used to trigger settings
+        await FirebaseFirestore.instance
+            .collection('flutter-tests')
+            .doc('new-doc')
+            .set(
+          {'some': 'data'},
         );
       });
 
-      test('setIndexConfigurationFromJSON()', () async {
-        final json = jsonEncode({
-          'indexes': [
-            {
-              'collectionGroup': 'posts',
-              'queryScope': 'COLLECTION',
-              'fields': [
-                {'fieldPath': 'author', 'arrayConfig': 'CONTAINS'},
-                {'fieldPath': 'timestamp', 'order': 'DESCENDING'}
-              ]
-            }
-          ],
-          'fieldOverrides': [
-            {
-              'collectionGroup': 'posts',
-              'fieldPath': 'myBigMapField',
-              'indexes': []
-            }
-          ]
-        });
+      testWidgets(
+          'Settings() - `persistenceEnabled` & `cacheSizeBytes` with `Settings.CACHE_SIZE_UNLIMITED`',
+          (widgetTester) async {
+        FirebaseFirestore.instance.settings = const Settings(
+          persistenceEnabled: true,
+          cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+        );
+        // Used to trigger settings
+        await FirebaseFirestore.instance
+            .collection('flutter-tests')
+            .doc('new-doc')
+            .set(
+          {'some': 'data'},
+        );
+      });
 
-        await firestore.setIndexConfigurationFromJSON(json);
+      testWidgets(
+          'Settings() - `persistenceEnabled` & without `cacheSizeBytes`',
+          (widgetTester) async {
+        FirebaseFirestore.instance.settings =
+            const Settings(persistenceEnabled: true);
+        // Used to trigger settings
+        await FirebaseFirestore.instance
+            .collection('flutter-tests')
+            .doc('new-doc')
+            .set(
+          {'some': 'data'},
+        );
       });
     },
   );

@@ -81,10 +81,12 @@ NSString *const kFLTFirebaseFunctionsChannelName = @"plugins.flutter.io/firebase
 - (void)httpsFunctionCall:(id)arguments withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
   NSString *appName = arguments[@"appName"];
   NSString *functionName = arguments[@"functionName"];
+  NSString *functionUri = arguments[@"functionUri"];
   NSString *origin = arguments[@"origin"];
   NSString *region = arguments[@"region"];
   NSNumber *timeout = arguments[@"timeout"];
   NSObject *parameters = arguments[@"parameters"];
+  NSNumber *limitedUseAppCheckToken = arguments[@"limitedUseAppCheckToken"];
 
   FIRApp *app = [FLTFirebasePlugin firebaseAppNamed:appName];
   FIRFunctions *functions = [FIRFunctions functionsForApp:app region:region];
@@ -93,7 +95,20 @@ NSString *const kFLTFirebaseFunctionsChannelName = @"plugins.flutter.io/firebase
     [functions useEmulatorWithHost:[url host] port:[[url port] intValue]];
   }
 
-  FIRHTTPSCallable *function = [functions HTTPSCallableWithName:functionName];
+  FIRHTTPSCallableOptions *options = [[FIRHTTPSCallableOptions alloc]
+      initWithRequireLimitedUseAppCheckTokens:[limitedUseAppCheckToken boolValue]];
+
+  FIRHTTPSCallable *function;
+
+  if (![functionName isEqual:[NSNull null]]) {
+    function = [functions HTTPSCallableWithName:functionName options:options];
+  } else if (![functionUri isEqual:[NSNull null]]) {
+    function = [functions HTTPSCallableWithURL:[NSURL URLWithString:functionUri] options:options];
+  } else {
+    result.error(@"IllegalArgumentException", @"Either functionName or functionUri must be set",
+                 nil, nil);
+    return;
+  }
   if (timeout != nil && ![timeout isEqual:[NSNull null]]) {
     function.timeoutInterval = timeout.doubleValue / 1000;
   }

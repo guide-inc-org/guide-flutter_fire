@@ -91,37 +91,29 @@ Ensure the "Google" sign-in provider is enabled on the [Firebase Console](https:
   }
   ```
 
-## Google Play Games {:#games}
+## Google Play Games (Android only) {:#games}
 
-You can authenticate users in your Android game using Play Games Sign-In.
+Ensure the "Play Games" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/project/_/authentication/providers).
+Follow these instructions for [Play Games Firebase project set-up](https://firebase.google.com/docs/auth/android/play-games#set-up-firebase-project).
+
+Follow these [instructions for configuring Play Games services](https://firebase.google.com/docs/auth/android/play-games#configure-play-games-with-firebase-info)
+with your Firebase app.
 
 * {Android}
 
-  Follow the instructions for Google setup on Android, then configure 
-  [Play Games services with your Firebase app information](https://firebase.google.com/docs/auth/android/play-games#configure-play-games-with-firebase-info).
+```dart
+Future<void> _signInWithPlayGames() async {
+  // Get server auth code from 3rd party provider
+  // See PR description for details on how you might get the server auth code:
+  // https://github.com/firebase/flutterfire/pull/12201#issue-2100392487
+  final serverAuthCode = '...';
+  final playGamesCredential = PlayGamesAuthProvider.credential(
+                                          serverAuthCode: serverAuthCode);
 
-  The following will trigger the sign-in flow, create a new credential and sign in the user:
-
-  ```dart
-  final googleUser = await GoogleSignIn(
-    signInOption: SignInOption.games,
-  ).signIn();
-
-  final googleAuth = await googleUser?.authentication;
-
-  if (googleAuth != null) {
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    await _auth.signInWithCredential(credential);
-  }
-  ```
-
-
+  await FirebaseAuth.instance
+    .signInWithCredential(playGamesCredential);
+}
+```
 
 ## Facebook
 
@@ -195,7 +187,7 @@ with the Facebook App ID and Secret set.
   }
   ```
 
-Note: Firebase will not set the `User.emailVerified` property
+Note: Firebase will not set the `User.isEmailVerified` property
 to `true` if your user logs in with Facebook. Should your user login using a provider that verifies email (e.g. Google sign-in) then this will be set to true.
 For further information, see this [issue](https://github.com/firebase/flutterfire/issues/4612#issuecomment-782107867).
 
@@ -232,6 +224,44 @@ Future<UserCredential> signInWithApple() async {
 }
 ```
 
+### Revoke Apple auth tokens {:#revoke-apple}
+
+Apple sign-in on Apple platforms returns an authorization code that can be used
+to revoke the Apple auth token using the `revokeTokenWithAuthorizationCode()`
+API.
+
+```dart
+import 'package:firebase_auth/firebase_auth.dart';
+
+Future<UserCredential> signInWithApple() async {
+  final appleProvider = AppleAuthProvider();
+
+  UserCredential userCredential = await FirebaseAuth.instance.signInWithPopup(appleProvider);
+  // Keep the authorization code returned from Apple platforms
+  String? authCode = userCredential.additionalUserInfo?.authorizationCode;
+  // Revoke Apple auth token
+  await FirebaseAuth.instance.revokeTokenWithAuthorizationCode(authCode!);
+}
+```
+
+## Apple Game Center (Apple only) {:#games}
+
+Ensure the "Game Center" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/project/_/authentication/providers).
+Follow these instructions for [Game Center Firebase project set-up](https://firebase.google.com/docs/auth/ios/game-center#before_you_begin).
+
+You will need to login with Game Center before a Firebase Game Center credential can be issued and logged in via Firebase. [Here are some instructions](https://firebase.google.com/docs/auth/ios/game-center#integrate_game_center_sign-in_into_your_game)
+on how that can be achieved.
+
+* {iOS+}
+
+```dart
+Future<void> _signInWithGameCenter() async {
+  final credential = GameCenterAuthProvider.credential();
+  await FirebaseAuth.instance
+      .signInWithCredential(credential);
+}
+```
+
 ## Microsoft
 
 * {iOS+}
@@ -241,7 +271,7 @@ Future<UserCredential> signInWithApple() async {
 
 * {Android}
   Before you begin [configure Microsoft Login for Android](/docs/auth/android/microsoft-oauth#before_you_begin).
-  
+
   Don't forget to add your app's SHA-1 fingerprint.
 
 * {Web}
@@ -264,7 +294,7 @@ Future<UserCredential> signInWithMicrosoft() async {
 ## Twitter
 
 Ensure the "Twitter" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/project/_/authentication/providers)
-with an API Key and API Secret set. Ensure your Firebase OAuth redirect URI (e.g. my-app-12345.firebaseapp.com/__/auth/handler) 
+with an API Key and API Secret set. Ensure your Firebase OAuth redirect URI (e.g. my-app-12345.firebaseapp.com/__/auth/handler)
 is set as your Authorization callback URL in your app's settings page on your [Twitter app's config](https://apps.twitter.com/).
 
 You also might need to request elevated [API access depending on your app](https://developer.twitter.com/en/portal/products/elevated).
@@ -275,7 +305,7 @@ You also might need to request elevated [API access depending on your app](https
 
 * {Android}
 
-  If you haven't yet specified your app's SHA-1 fingerprint, do so from the [Settings page](https://console.firebase.google.com/project/_/settings/general/) 
+  If you haven't yet specified your app's SHA-1 fingerprint, do so from the [Settings page](https://console.firebase.google.com/project/_/settings/general/)
   of the Firebase console. Refer to [Authenticating Your Client](https://developers.google.com/android/guides/client-auth) for details on how to get your app's SHA-1 fingerprint.
 
 * {Web}
@@ -347,7 +377,7 @@ with the Client ID and Secret are set, with the callback URL set in the GitHub a
 ## Yahoo
 
 Ensure the "Yahoo" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/project/_/authentication/providers)
-with an API Key and API Secret set. Also make sure your Firebase OAuth redirect URI (e.g. my-app-12345.firebaseapp.com/__/auth/handler) 
+with an API Key and API Secret set. Also make sure your Firebase OAuth redirect URI (e.g. my-app-12345.firebaseapp.com/__/auth/handler)
 is set as a redirect URI in your app's Yahoo Developer Network configuration.
 
 
@@ -358,7 +388,7 @@ is set as a redirect URI in your app's Yahoo Developer Network configuration.
 
 * {Android}
   Before you begin, [configure Yahoo Login for Android](/docs/auth/android/yahoo-oauth#before_you_begin).
-  
+
   Don't forget to add your app's SHA-1 fingerprint.
 
 * {Web}
@@ -403,7 +433,7 @@ final appleProvider = AppleAuthProvider();
 
 if (kIsWeb) {
   await FirebaseAuth.instance.currentUser?.linkWithPopup(appleProvider);
-  
+
   // You can also use `linkWithRedirect`
 } else {
   await FirebaseAuth.instance.currentUser?.linkWithProvider(appleProvider);
@@ -422,7 +452,7 @@ final appleProvider = AppleAuthProvider();
 
 if (kIsWeb) {
   await FirebaseAuth.instance.currentUser?.reauthenticateWithPopup(appleProvider);
-  
+
   // Or you can reauthenticate with a redirection
   // await FirebaseAuth.instance.currentUser?.reauthenticateWithRedirect(appleProvider);
 } else {

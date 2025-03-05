@@ -1,3 +1,190 @@
+## 0.1.2+6
+
+ - Update a dependency to the latest release.
+
+## 0.1.2+5
+
+ - Update a dependency to the latest release.
+
+## 0.1.2+4
+
+ - Update a dependency to the latest release.
+
+## 0.1.2+3
+
+ - Update a dependency to the latest release.
+
+## 0.1.2+2
+
+ - Update a dependency to the latest release.
+
+## 0.1.2+1
+
+ - **FIX**(web): remove remaining references to `dart:html` ([#12601](https://github.com/firebase/flutterfire/issues/12601)). ([fbffedb6](https://github.com/firebase/flutterfire/commit/fbffedb65c180d29a07436af90b36ca56e97bfe7))
+
+## 0.1.2
+
+ - **FEAT**(web): remove the dependency on `package:js` in favor of `dart:js_interop` ([#12534](https://github.com/firebase/flutterfire/issues/12534)). ([d83f6327](https://github.com/firebase/flutterfire/commit/d83f632753707c974fef2ac8a7f9bf6cb8ba8758))
+
+## 0.1.1+1
+
+ - **FIX**(app_check,web): fix typing inference for `getToken` on web ([#12501](https://github.com/firebase/flutterfire/issues/12501)). ([67dd9c78](https://github.com/firebase/flutterfire/commit/67dd9c7803975a5c1cdfcc6ebf03d1f8f372e183))
+
+## 0.1.1
+
+ - **FEAT**: update `web` package to 0.5.1 ([#12469](https://github.com/firebase/flutterfire/issues/12469)). ([f5c4354a](https://github.com/firebase/flutterfire/commit/f5c4354a66377da9d231c5e3fc7e955ddb7ef8cf))
+ - **FEAT**(app_check,web): migrate web to js_interop to be compatible with WASM ([#12209](https://github.com/firebase/flutterfire/issues/12209)). ([69e2e772](https://github.com/firebase/flutterfire/commit/69e2e772dacbc759657b0cc086ac1423c6b67c3d))
+
+## 0.1.0+19
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+18
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+17
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+16
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+15
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+14
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+13
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+12
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+11
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 0.1.0+10
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+9
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+8
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+7
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+6
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+5
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+4
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+3
+
+ - Update a dependency to the latest release.
+
+## 0.1.0+2
+
+ - **FIX**(firebase_app_check_web): Activate web app check on startup if it was previously activated ([#11625](https://github.com/firebase/flutterfire/issues/11625)). ([493f2548](https://github.com/firebase/flutterfire/commit/493f254824aa7aedf6ccc5223efbb72d13811c5f))
+
+## 0.1.0+1
+
+ - Update a dependency to the latest release.
+
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(app-check,web): support for `ReCaptchaEnterpriseProvider`. User facing API updated. ([#11573](https://github.com/firebase/flutterfire/issues/11573)). ([09825edd](https://github.com/firebase/flutterfire/commit/09825edd0e1ecd609e2046fdefda439ce4099087))
+
+## 0.0.11+2
+
+ - Update a dependency to the latest release.
+
+## 0.0.11+1
+
+ - Update a dependency to the latest release.
+
+## 0.0.11
+
+ - **FEAT**(app-check): support for `getLimitedUseToken()` API ([#11091](https://github.com/firebase/flutterfire/issues/11091)). ([9db9326f](https://github.com/firebase/flutterfire/commit/9db9326fe503c31299c9685449150e809543974e))
+
+## 0.0.10+3
+
+ - **FIX**(core): Omit unnecessary libraries for web ([#10068](https://github.com/firebase/flutterfire/issues/10068)). ([8659d4ed](https://github.com/firebase/flutterfire/commit/8659d4ed805ac92964c2c92d55192f6ef40d721a))
+
+## 0.0.10+2
+
+ - Update a dependency to the latest release.
+
+## 0.0.10+1
+
+ - Update a dependency to the latest release.
+
+## 0.0.10
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 0.0.9
+
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 0.0.8+2
+
+ - Update a dependency to the latest release.
+
+## 0.0.8+1
+
+ - Update a dependency to the latest release.
+
+## 0.0.8
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 0.0.7+17
+
+ - Update a dependency to the latest release.
+
+## 0.0.7+16
+
+ - Update a dependency to the latest release.
+
+## 0.0.7+15
+
+ - Update a dependency to the latest release.
+
+## 0.0.7+14
+
+ - Update a dependency to the latest release.
+
+## 0.0.7+13
+
+ - Update a dependency to the latest release.
+
+## 0.0.7+12
+
+ - Update a dependency to the latest release.
+
 ## 0.0.7+11
 
  - Update a dependency to the latest release.

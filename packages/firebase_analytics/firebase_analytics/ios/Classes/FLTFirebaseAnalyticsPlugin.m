@@ -15,6 +15,9 @@ NSString *const kFLTFirebaseAnalyticsEventName = @"eventName";
 NSString *const kFLTFirebaseAnalyticsParameters = @"parameters";
 NSString *const kFLTFirebaseAnalyticsAdStorageConsentGranted = @"adStorageConsentGranted";
 NSString *const kFLTFirebaseAnalyticsStorageConsentGranted = @"analyticsStorageConsentGranted";
+NSString *const kFLTFirebaseAdPersonalizationSignalsConsentGranted =
+    @"adPersonalizationSignalsConsentGranted";
+NSString *const kFLTFirebaseAdUserDataConsentGranted = @"adUserDataConsentGranted";
 NSString *const kFLTFirebaseAnalyticsUserId = @"userId";
 
 NSString *const FLTFirebaseAnalyticsChannelName = @"plugins.flutter.io/firebase_analytics";
@@ -72,12 +75,27 @@ NSString *const FLTFirebaseAnalyticsChannelName = @"plugins.flutter.io/firebase_
     [self setDefaultEventParameters:call.arguments withMethodCallResult:methodCallResult];
   } else if ([@"Analytics#getAppInstanceId" isEqualToString:call.method]) {
     [self getAppInstanceIdWithMethodCallResult:methodCallResult];
+  } else if ([@"Analytics#getSessionId" isEqualToString:call.method]) {
+    [self getSessionIdWithMethodCallResult:methodCallResult];
+  } else if ([@"Analytics#initiateOnDeviceConversionMeasurement" isEqualToString:call.method]) {
+    [self initiateOnDeviceConversionMeasurement:call.arguments
+                           withMethodCallResult:methodCallResult];
   } else {
     result(FlutterMethodNotImplemented);
   }
 }
 
 #pragma mark - Firebase Analytics API
+
+- (void)getSessionIdWithMethodCallResult:(FLTFirebaseMethodCallResult *)result {
+  [FIRAnalytics sessionIDWithCompletion:^(int64_t sessionID, NSError *_Nullable error) {
+    if (error != nil) {
+      result.error(nil, nil, nil, error);
+    } else {
+      result.success([NSNumber numberWithLongLong:sessionID]);
+    }
+  }];
+}
 
 - (void)logEvent:(id)arguments withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
   NSString *eventName = arguments[kFLTFirebaseAnalyticsEventName];
@@ -122,6 +140,10 @@ NSString *const FLTFirebaseAnalyticsChannelName = @"plugins.flutter.io/firebase_
 - (void)setConsent:(id)arguments withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
   NSNumber *adStorageGranted = arguments[kFLTFirebaseAnalyticsAdStorageConsentGranted];
   NSNumber *analyticsStorageGranted = arguments[kFLTFirebaseAnalyticsStorageConsentGranted];
+  NSNumber *adPersonalizationSignalsGranted =
+      arguments[kFLTFirebaseAdPersonalizationSignalsConsentGranted];
+  NSNumber *adUserDataGranted = arguments[kFLTFirebaseAdUserDataConsentGranted];
+
   NSMutableDictionary<FIRConsentType, FIRConsentStatus> *parameters =
       [[NSMutableDictionary alloc] init];
 
@@ -132,6 +154,17 @@ NSString *const FLTFirebaseAnalyticsChannelName = @"plugins.flutter.io/firebase_
   if (analyticsStorageGranted != nil) {
     parameters[FIRConsentTypeAnalyticsStorage] =
         [analyticsStorageGranted boolValue] ? FIRConsentStatusGranted : FIRConsentStatusDenied;
+  }
+
+  if (adPersonalizationSignalsGranted != nil) {
+    parameters[FIRConsentTypeAdPersonalization] = [adPersonalizationSignalsGranted boolValue]
+                                                      ? FIRConsentStatusGranted
+                                                      : FIRConsentStatusDenied;
+  }
+
+  if (adUserDataGranted != nil) {
+    parameters[FIRConsentTypeAdUserData] =
+        [adUserDataGranted boolValue] ? FIRConsentStatusGranted : FIRConsentStatusDenied;
   }
 
   [FIRAnalytics setConsent:parameters];
@@ -147,6 +180,20 @@ NSString *const FLTFirebaseAnalyticsChannelName = @"plugins.flutter.io/firebase_
 - (void)getAppInstanceIdWithMethodCallResult:(FLTFirebaseMethodCallResult *)result {
   NSString *appInstanceID = [FIRAnalytics appInstanceID];
   result.success(appInstanceID);
+}
+
+- (void)initiateOnDeviceConversionMeasurement:(id)arguments
+                         withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
+  NSString *emailAddress = arguments[@"emailAddress"];
+  NSString *phoneNumber = arguments[@"phoneNumber"];
+
+  if (![emailAddress isKindOfClass:[NSNull class]]) {
+    [FIRAnalytics initiateOnDeviceConversionMeasurementWithEmailAddress:emailAddress];
+  }
+  if (![phoneNumber isKindOfClass:[NSNull class]]) {
+    [FIRAnalytics initiateOnDeviceConversionMeasurementWithPhoneNumber:phoneNumber];
+  }
+  result.success(nil);
 }
 
 #pragma mark - FLTFirebasePlugin

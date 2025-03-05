@@ -4,9 +4,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-// TODO(Lyokone): remove once we bump Flutter SDK min version to 3.3
-// ignore: unnecessary_import
-import 'dart:typed_data';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -22,18 +19,30 @@ abstract class FirebaseFirestorePlatform extends PlatformInterface {
   final FirebaseApp? appInstance;
 
   /// Create an instance using [app]
-  FirebaseFirestorePlatform({this.appInstance}) : super(token: _token);
+  FirebaseFirestorePlatform({this.appInstance, this.databaseChoice})
+      : super(token: _token);
 
   /// Returns the [FirebaseApp] for the current instance.
   FirebaseApp get app {
     return appInstance ?? Firebase.app();
   }
 
+  final String? databaseChoice;
+
+  /// Firestore Database URL for this instance. Falls back to default database: "(default)"
+  String get databaseId {
+    return databaseChoice ?? '(default)';
+  }
+
   static final Object _token = Object();
 
   /// Create an instance using [app] using the existing implementation
-  factory FirebaseFirestorePlatform.instanceFor({required FirebaseApp app}) {
-    return FirebaseFirestorePlatform.instance.delegateFor(app: app);
+  factory FirebaseFirestorePlatform.instanceFor({
+    required FirebaseApp app,
+    required String databaseId,
+  }) {
+    return FirebaseFirestorePlatform.instance
+        .delegateFor(app: app, databaseId: databaseId);
   }
 
   /// The current default [FirebaseFirestorePlatform] instance.
@@ -41,7 +50,8 @@ abstract class FirebaseFirestorePlatform extends PlatformInterface {
   /// It will always default to [MethodChannelFirebaseFirestore]
   /// if no other implementation was provided.
   static FirebaseFirestorePlatform get instance {
-    return _instance ??= MethodChannelFirebaseFirestore(app: Firebase.app());
+    return _instance ??= MethodChannelFirebaseFirestore(
+        app: Firebase.app(), databaseId: '(default)');
   }
 
   static FirebaseFirestorePlatform? _instance;
@@ -55,7 +65,8 @@ abstract class FirebaseFirestorePlatform extends PlatformInterface {
   /// Enables delegates to create new instances of themselves if a none default
   /// [FirebaseApp] instance is required by the user.
   @protected
-  FirebaseFirestorePlatform delegateFor({required FirebaseApp app}) {
+  FirebaseFirestorePlatform delegateFor(
+      {required FirebaseApp app, required String databaseId}) {
     throw UnimplementedError('delegateFor() is not implemented');
   }
 
@@ -79,7 +90,10 @@ abstract class FirebaseFirestorePlatform extends PlatformInterface {
     throw UnimplementedError('clearPersistence() is not implemented');
   }
 
-  /// Enable persistence of Firestore data. Web only.
+  /// Enable persistence of Firestore data for web-only. Use [Settings.persistenceEnabled] for non-web platforms.
+  /// If `enablePersistence()` is not called, it defaults to Memory cache.
+  /// If `enablePersistence(const PersistenceSettings(synchronizeTabs: false))` is called, it persists data for a single browser tab.
+  /// If `enablePersistence(const PersistenceSettings(synchronizeTabs: true))` is called, it persists data across multiple browser tabs.
   Future<void> enablePersistence(
       [PersistenceSettings? persistenceSettings]) async {
     throw UnimplementedError('enablePersistence() is not implemented');
@@ -114,7 +128,7 @@ abstract class FirebaseFirestorePlatform extends PlatformInterface {
     throw UnimplementedError('enableNetwork() is not implemented');
   }
 
-  /// Returns a [Steam] which is called each time all of the active listeners
+  /// Returns a [Stream] which is called each time all of the active listeners
   /// have been synchronised.
   Stream<void> snapshotsInSync() {
     throw UnimplementedError('snapshotsInSync() is not implemented');
@@ -216,6 +230,11 @@ abstract class FirebaseFirestorePlatform extends PlatformInterface {
   /// This API is in preview mode and is subject to change.
   Future<void> setIndexConfiguration(String indexConfiguration) {
     throw UnimplementedError('setIndexConfiguration() is not implemented');
+  }
+
+  /// Globally enables / disables Cloud Firestore logging for the SDK.
+  Future<void> setLoggingEnabled(bool enabled) {
+    throw UnimplementedError('setLoggingEnabled() is not implemented');
   }
 
   @override

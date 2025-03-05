@@ -37,7 +37,7 @@ class User {
   /// Once verified, call [reload] to ensure the latest user information is
   /// retrieved from Firebase.
   bool get emailVerified {
-    return _delegate.emailVerified;
+    return _delegate.isEmailVerified;
   }
 
   /// Returns whether the user is a anonymous.
@@ -116,7 +116,7 @@ class User {
   ///
   /// If [forceRefresh] is `true`, the token returned will be refreshed regardless
   /// of token expiration.
-  Future<String> getIdToken([bool forceRefresh = false]) {
+  Future<String?> getIdToken([bool forceRefresh = false]) {
     return _delegate.getIdToken(forceRefresh);
   }
 
@@ -593,6 +593,8 @@ class User {
   ///  - Thrown if the user's last sign-in time does not meet the security
   ///    threshold. Use [User.reauthenticateWithCredential] to resolve. This
   ///    does not apply if the user is anonymous.
+  @Deprecated(
+      'updateEmail() has been deprecated. Please use verifyBeforeUpdateEmail() instead.')
   Future<void> updateEmail(String newEmail) async {
     await _delegate.updateEmail(newEmail);
   }
@@ -663,6 +665,11 @@ class User {
   }
 
   MultiFactor get multiFactor {
+    if (!kIsWeb && (Platform.isMacOS || Platform.isWindows)) {
+      throw UnimplementedError(
+        'MultiFactor Authentication is only supported on web, Android and iOS.',
+      );
+    }
     return _multiFactor ??= MultiFactor._(_delegate.multiFactor);
   }
 
@@ -671,7 +678,7 @@ class User {
     return '$User('
         'displayName: $displayName, '
         'email: $email, '
-        'emailVerified: $emailVerified, '
+        'isEmailVerified: $emailVerified, '
         'isAnonymous: $isAnonymous, '
         'metadata: $metadata, '
         'phoneNumber: $phoneNumber, '

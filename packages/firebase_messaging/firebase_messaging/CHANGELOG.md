@@ -1,3 +1,199 @@
+## 14.9.3
+
+ - **FIX**(messaging): ensure default app is available before checking auth notification ([#12810](https://github.com/firebase/flutterfire/issues/12810)). ([eca2df61](https://github.com/firebase/flutterfire/commit/eca2df615deaf1612ff027044cec3c0df3cf95c1))
+
+## 14.9.2
+
+ - **FIX**(messaging,apple): rename to `PrivacyInfo.xcprivacy` for privacy manifest ([#12752](https://github.com/firebase/flutterfire/issues/12752)). ([c5bdebc8](https://github.com/firebase/flutterfire/commit/c5bdebc89c64419e755f0b375108719785129716))
+ - **FIX**(messaging,android): remove deprecated instance ID (iid) dependency ([#12702](https://github.com/firebase/flutterfire/issues/12702)). ([7b2990b3](https://github.com/firebase/flutterfire/commit/7b2990b36197a2848f424aefb6603b5d9c87f73e))
+
+## 14.9.1
+
+ - Update a dependency to the latest release.
+
+## 14.9.0
+
+ - **FIX**(firebase_messaging,web): Define scope for 'firebase-messaging-sw.js' on registration ([#12639](https://github.com/firebase/flutterfire/issues/12639)). ([02c26b34](https://github.com/firebase/flutterfire/commit/02c26b34a2baa2f335770db648dd57055e92066d))
+ - **FEAT**(messaging,apple): provide privacy manifest for `NSUserDefaults` usage in plugin ([#12665](https://github.com/firebase/flutterfire/issues/12665)). ([933e343e](https://github.com/firebase/flutterfire/commit/933e343e6457f8d4e5fd1b8237d631fd69850076))
+
+## 14.8.2
+
+ - **FIX**(messaging,android): Replace deprecated AsyncTask API and other deprecated API ([#12580](https://github.com/firebase/flutterfire/issues/12580)). ([ac089e56](https://github.com/firebase/flutterfire/commit/ac089e5653715744892b6fe298d1814f81160970))
+
+## 14.8.1
+
+ - Update a dependency to the latest release.
+
+## 14.8.0
+
+ - **FEAT**(android): Bump `compileSdk` version of Android plugins to latest stable (34) ([#12566](https://github.com/firebase/flutterfire/issues/12566)). ([e891fab2](https://github.com/firebase/flutterfire/commit/e891fab291e9beebc223000b133a6097e066a7fc))
+
+## 14.7.21
+
+ - Update a dependency to the latest release.
+
+## 14.7.20
+
+ - Update a dependency to the latest release.
+
+## 14.7.19
+
+ - Update a dependency to the latest release.
+
+## 14.7.18
+
+ - Update a dependency to the latest release.
+
+## 14.7.17
+
+ - **FIX**(messaging,android): revert changes made to potential fix as it was causing ANR reports for users ([#12396](https://github.com/firebase/flutterfire/issues/12396)). ([07ef4879](https://github.com/firebase/flutterfire/commit/07ef487971edb23a670d2b1dd315c02542b1c848))
+
+## 14.7.16
+
+ - Update a dependency to the latest release.
+
+## 14.7.15
+
+ - Update a dependency to the latest release.
+
+## 14.7.14
+
+ - Update a dependency to the latest release.
+
+## 14.7.13
+
+ - Update a dependency to the latest release.
+
+## 14.7.12
+
+ - Update a dependency to the latest release.
+
+## 14.7.11
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 14.7.10
+
+ - **FIX**(messaging,android): increase notification storage limit to `100` ([#12060](https://github.com/firebase/flutterfire/issues/12060)). ([2718db66](https://github.com/firebase/flutterfire/commit/2718db663e61ecb2fd4333553a17ebb217e77330))
+ - **FIX**(messaging,android): possible fix to a crash occurring on android background executor ([#12057](https://github.com/firebase/flutterfire/issues/12057)). ([3eaae47f](https://github.com/firebase/flutterfire/commit/3eaae47faccf38fc5f3ec52a753858780a0e5efc))
+
+## 14.7.9
+
+ - **FIX**(messaging): expose the missing WebNotification object ([#11991](https://github.com/firebase/flutterfire/issues/11991)). ([9f4529e3](https://github.com/firebase/flutterfire/commit/9f4529e39cc707f321c6f765835f038165ff785f))
+
+## 14.7.8
+
+ - Update a dependency to the latest release.
+
+## 14.7.7
+
+ - Update a dependency to the latest release.
+
+## 14.7.6
+
+ - Update a dependency to the latest release.
+
+## 14.7.5
+
+ - Update a dependency to the latest release.
+
+## 14.7.4
+
+ - Update a dependency to the latest release.
+
+## 14.7.3
+
+ - Update a dependency to the latest release.
+
+## 14.7.2
+
+ - Update a dependency to the latest release.
+
+## 14.7.1
+
+ - Update a dependency to the latest release.
+
+## 14.7.0
+
+ - **FEAT**: Full support of AGP 8 ([#11699](https://github.com/firebase/flutterfire/issues/11699)). ([bdb5b270](https://github.com/firebase/flutterfire/commit/bdb5b27084d225809883bdaa6aa5954650551927))
+
+## 14.6.9
+
+ - **REFACTOR**(messaging,android): removed unsafe & deprecated API. E.g. `LocalBroadcastManager` replaced by `LiveData` ([#11659](https://github.com/firebase/flutterfire/issues/11659)). ([690160f8](https://github.com/firebase/flutterfire/commit/690160f8ac6c9ec582d0882a22618e3126d705ad))
+
+## 14.6.8
+
+ - Update a dependency to the latest release.
+
+## 14.6.7
+
+ - Update a dependency to the latest release.
+
+## 14.6.6
+
+ - Update a dependency to the latest release.
+
+## 14.6.5
+
+ - Update a dependency to the latest release.
+
+## 14.6.4
+
+ - **FIX**(messaging): revert change to `getParcelableExtra()` that may result in crash ([#11163](https://github.com/firebase/flutterfire/issues/11163)). ([b85e074b](https://github.com/firebase/flutterfire/commit/b85e074bfadbb6a813b13f795973e1efe858116d))
+
+## 14.6.3
+
+ - **FIX**(firebase messaging,android): update `getParcelableExtra()` for Android 33. ([#10921](https://github.com/firebase/flutterfire/issues/10921)). ([c8b685b9](https://github.com/firebase/flutterfire/commit/c8b685b9318804596a5513acaf01a46049323267))
+
+## 14.6.2
+
+ - Update a dependency to the latest release.
+
+## 14.6.1
+
+ - Update a dependency to the latest release.
+
+## 14.6.0
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 14.5.0
+
+ - **FIX**: add support for AGP 8.0 ([#10901](https://github.com/firebase/flutterfire/issues/10901)). ([a3b96735](https://github.com/firebase/flutterfire/commit/a3b967354294c295a9be8d699a6adb7f4b1dba7f))
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 14.4.1
+
+ - Update a dependency to the latest release.
+
+## 14.4.0
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 14.3.0
+
+ - **FEAT**: bump Firebase iOS SDK `10.5.0` ([#10532](https://github.com/firebase/flutterfire/issues/10532)). ([c77fc4d4](https://github.com/firebase/flutterfire/commit/c77fc4d497532ffff352a3486abf01a98bc44869))
+
+## 14.2.6
+
+ - Update a dependency to the latest release.
+
+## 14.2.5
+
+ - **FIX**: badge is in the `message`, not the `notification` ([#10470](https://github.com/firebase/flutterfire/issues/10470)). ([cf282675](https://github.com/firebase/flutterfire/commit/cf282675a498629887680b37a81014bb939552b4))
+
+## 14.2.4
+
+ - Update a dependency to the latest release.
+
+## 14.2.3
+
+ - Update a dependency to the latest release.
+
+## 14.2.2
+
+ - **REFACTOR**: upgrade project to remove warnings from Flutter 3.7 ([#10344](https://github.com/firebase/flutterfire/issues/10344)). ([e0087c84](https://github.com/firebase/flutterfire/commit/e0087c845c7526c11a4241a26d39d4673b0ad29d))
+
 ## 14.2.1
 
  - Update a dependency to the latest release.

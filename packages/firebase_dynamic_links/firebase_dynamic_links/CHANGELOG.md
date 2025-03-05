@@ -1,3 +1,181 @@
+## 5.5.6
+
+ - Update a dependency to the latest release.
+
+## 5.5.5
+
+ - Update a dependency to the latest release.
+
+## 5.5.4
+
+ - Update a dependency to the latest release.
+
+## 5.5.3
+
+ - Update a dependency to the latest release.
+
+## 5.5.2
+
+ - Update a dependency to the latest release.
+
+## 5.5.1
+
+ - Update a dependency to the latest release.
+
+## 5.5.0
+
+ - **FEAT**(android): Bump `compileSdk` version of Android plugins to latest stable (34) ([#12566](https://github.com/firebase/flutterfire/issues/12566)). ([e891fab2](https://github.com/firebase/flutterfire/commit/e891fab291e9beebc223000b133a6097e066a7fc))
+
+## 5.4.19
+
+ - Update a dependency to the latest release.
+
+## 5.4.18
+
+ - Update a dependency to the latest release.
+
+## 5.4.17
+
+ - Update a dependency to the latest release.
+
+## 5.4.16
+
+ - Update a dependency to the latest release.
+
+## 5.4.15
+
+ - Update a dependency to the latest release.
+
+## 5.4.14
+
+ - Update a dependency to the latest release.
+
+## 5.4.13
+
+ - Update a dependency to the latest release.
+
+## 5.4.12
+
+ - Update a dependency to the latest release.
+
+## 5.4.11
+
+ - Update a dependency to the latest release.
+
+## 5.4.10
+
+ - Update a dependency to the latest release.
+
+## 5.4.9
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 5.4.8
+
+ - Update a dependency to the latest release.
+
+## 5.4.7
+
+ - Update a dependency to the latest release.
+
+## 5.4.6
+
+ - Update a dependency to the latest release.
+
+## 5.4.5
+
+ - Update a dependency to the latest release.
+
+## 5.4.4
+
+ - Update a dependency to the latest release.
+
+## 5.4.3
+
+ - Update a dependency to the latest release.
+
+## 5.4.2
+
+ - Update a dependency to the latest release.
+
+## 5.4.1
+
+ - Update a dependency to the latest release.
+
+## 5.4.0
+
+ - **FEAT**: Full support of AGP 8 ([#11699](https://github.com/firebase/flutterfire/issues/11699)). ([bdb5b270](https://github.com/firebase/flutterfire/commit/bdb5b27084d225809883bdaa6aa5954650551927))
+
+## 5.3.7
+
+ - Update a dependency to the latest release.
+
+## 5.3.6
+
+ - **DOCS**(firebase_dynamic_links): add deprecation note to README.md ([#11506](https://github.com/firebase/flutterfire/issues/11506)). ([520fed64](https://github.com/firebase/flutterfire/commit/520fed6409892c4ee9ca4e9b9f20d6f820cbc1a5))
+
+## 5.3.5
+
+ - Update a dependency to the latest release.
+
+## 5.3.4
+
+ - Update a dependency to the latest release.
+
+## 5.3.3
+
+ - Update a dependency to the latest release.
+
+## 5.3.2
+
+ - Update a dependency to the latest release.
+
+## 5.3.1
+
+ - Update a dependency to the latest release.
+
+## 5.3.0
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+ - **FEAT**: update librairies to be compatible with Flutter 3.10.0 ([#10944](https://github.com/firebase/flutterfire/issues/10944)). ([e1f5a5ea](https://github.com/firebase/flutterfire/commit/e1f5a5ea798c54f19d1d2f7b8f2250f8819f44b7))
+
+## 5.2.0
+
+ - **FIX**: add support for AGP 8.0 ([#10901](https://github.com/firebase/flutterfire/issues/10901)). ([a3b96735](https://github.com/firebase/flutterfire/commit/a3b967354294c295a9be8d699a6adb7f4b1dba7f))
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 5.1.1
+
+ - Update a dependency to the latest release.
+
+## 5.1.0
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 5.0.17
+
+ - Update a dependency to the latest release.
+
+## 5.0.16
+
+ - Update a dependency to the latest release.
+
+## 5.0.15
+
+ - Update a dependency to the latest release.
+
+## 5.0.14
+
+ - Update a dependency to the latest release.
+
+## 5.0.13
+
+ - Update a dependency to the latest release.
+
+## 5.0.12
+
+ - Update a dependency to the latest release.
+
 ## 5.0.11
 
  - Update a dependency to the latest release.

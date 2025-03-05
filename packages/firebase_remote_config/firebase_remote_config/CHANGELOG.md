@@ -1,3 +1,191 @@
+## 4.4.6
+
+ - Update a dependency to the latest release.
+
+## 4.4.5
+
+ - Update a dependency to the latest release.
+
+## 4.4.4
+
+ - Update a dependency to the latest release.
+
+## 4.4.3
+
+ - Update a dependency to the latest release.
+
+## 4.4.2
+
+ - Update a dependency to the latest release.
+
+## 4.4.1
+
+ - Update a dependency to the latest release.
+
+## 4.4.0
+
+ - **FIX**(remote_config): fixing an issue that could cause duplicate listeners on hot restart ([#12545](https://github.com/firebase/flutterfire/issues/12545)). ([4b789875](https://github.com/firebase/flutterfire/commit/4b7898751f658125279b9e904e0179ca6c33cb25))
+ - **FEAT**(android): Bump `compileSdk` version of Android plugins to latest stable (34) ([#12566](https://github.com/firebase/flutterfire/issues/12566)). ([e891fab2](https://github.com/firebase/flutterfire/commit/e891fab291e9beebc223000b133a6097e066a7fc))
+
+## 4.3.19
+
+ - Update a dependency to the latest release.
+
+## 4.3.18
+
+ - Update a dependency to the latest release.
+
+## 4.3.17
+
+ - Update a dependency to the latest release.
+
+## 4.3.16
+
+ - Update a dependency to the latest release.
+
+## 4.3.15
+
+ - Update a dependency to the latest release.
+
+## 4.3.14
+
+ - Update a dependency to the latest release.
+
+## 4.3.13
+
+ - Update a dependency to the latest release.
+
+## 4.3.12
+
+ - Update a dependency to the latest release.
+
+## 4.3.11
+
+ - Update a dependency to the latest release.
+
+## 4.3.10
+
+ - Update a dependency to the latest release.
+
+## 4.3.9
+
+ - Update a dependency to the latest release.
+
+## 4.3.8
+
+ - Update a dependency to the latest release.
+
+## 4.3.7
+
+ - Update a dependency to the latest release.
+
+## 4.3.6
+
+ - Update a dependency to the latest release.
+
+## 4.3.5
+
+ - **FIX**(remote_config,android): fix an issue that could cause a non responsive app when hot restarting an app ([#11895](https://github.com/firebase/flutterfire/issues/11895)). ([1cfdb063](https://github.com/firebase/flutterfire/commit/1cfdb063f01a0036bec02e69e96a0ca6bb8ca83a))
+
+## 4.3.4
+
+ - Update a dependency to the latest release.
+
+## 4.3.3
+
+ - Update a dependency to the latest release.
+
+## 4.3.2
+
+ - Update a dependency to the latest release.
+
+## 4.3.1
+
+ - Update a dependency to the latest release.
+
+## 4.3.0
+
+ - **FEAT**: Full support of AGP 8 ([#11699](https://github.com/firebase/flutterfire/issues/11699)). ([bdb5b270](https://github.com/firebase/flutterfire/commit/bdb5b27084d225809883bdaa6aa5954650551927))
+ - **FEAT**(firestore,windows): add support to Windows ([#11516](https://github.com/firebase/flutterfire/issues/11516)). ([e51d2a2d](https://github.com/firebase/flutterfire/commit/e51d2a2d287f4162f5a67d8200f1bf57fc2afe14))
+
+## 4.2.7
+
+ - Update a dependency to the latest release.
+
+## 4.2.6
+
+ - Update a dependency to the latest release.
+
+## 4.2.5
+
+ - **DOCS**(firebase_remote_config): Remove link with archived content from readme ([#11471](https://github.com/firebase/flutterfire/issues/11471)). ([26ee5ed1](https://github.com/firebase/flutterfire/commit/26ee5ed1c555681b420852512f671653b14cb4fa))
+
+## 4.2.4
+
+ - Update a dependency to the latest release.
+
+## 4.2.3
+
+ - **FIX**(firebase_remote_config): fix build error for macos example ([#11108](https://github.com/firebase/flutterfire/issues/11108)). ([03103a0b](https://github.com/firebase/flutterfire/commit/03103a0b32055267a5290a6f0b1584818b8ac4db))
+
+## 4.2.2
+
+ - Update a dependency to the latest release.
+
+## 4.2.1
+
+ - Update a dependency to the latest release.
+
+## 4.2.0
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 4.1.0
+
+ - **FIX**: add support for AGP 8.0 ([#10901](https://github.com/firebase/flutterfire/issues/10901)). ([a3b96735](https://github.com/firebase/flutterfire/commit/a3b967354294c295a9be8d699a6adb7f4b1dba7f))
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 4.0.2
+
+ - **DOCS**(firebase_remote_config): add documentation what is returned when the key does not exist for `getBool`, `getInt`, `getDouble` and `getString` ([#10573](https://github.com/firebase/flutterfire/issues/10573)). ([37c5f27d](https://github.com/firebase/flutterfire/commit/37c5f27d56c63bc9b800e588503d649f0ea807e4))
+
+## 4.0.1
+
+ - Update a dependency to the latest release.
+
+## 4.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: This PR is a breaking change for Remote Config since we're removing the ChangeNotifier mixin that came with FirebaseRemoteConfig. You should handle the state of the RemoteConfig using your own state provider.
+ - **FEAT**: add support for `onConfigUpdated`to listen to config updates ([#10647](https://github.com/firebase/flutterfire/commit/f702869e6120f10a368c1b32e9f27d615df99641))
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 3.0.15
+
+ - Update a dependency to the latest release.
+
+## 3.0.14
+
+ - Update a dependency to the latest release.
+
+## 3.0.13
+
+ - Update a dependency to the latest release.
+
+## 3.0.12
+
+ - Update a dependency to the latest release.
+
+## 3.0.11
+
+ - Update a dependency to the latest release.
+
+## 3.0.10
+
+ - **REFACTOR**: upgrade project to remove warnings from Flutter 3.7 ([#10344](https://github.com/firebase/flutterfire/issues/10344)). ([e0087c84](https://github.com/firebase/flutterfire/commit/e0087c845c7526c11a4241a26d39d4673b0ad29d))
+ - **FIX**: update exception handling to show actual exception ([#9629](https://github.com/firebase/flutterfire/issues/9629)). ([3bb4d1b1](https://github.com/firebase/flutterfire/commit/3bb4d1b19480afff6f94c27a214925380850304b))
+
 ## 3.0.9
 
  - Update a dependency to the latest release.

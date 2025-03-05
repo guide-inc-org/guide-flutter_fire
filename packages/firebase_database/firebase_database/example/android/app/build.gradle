@@ -25,18 +25,20 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-  compileSdkVersion 31
+  namespace 'io.flutter.plugins.firebase.database.example'
 
-  lintOptions {
-    disable 'InvalidPackage'
-  }
+  compileSdk 34
 
   defaultConfig {
     applicationId 'io.flutter.plugins.firebase.database.example'
-    minSdkVersion 19
-    targetSdkVersion 30
+    minSdk 19
+    targetSdk 33
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
+  }
+
+  lintOptions {
+    disable 'InvalidPackage'
   }
 
   buildTypes {

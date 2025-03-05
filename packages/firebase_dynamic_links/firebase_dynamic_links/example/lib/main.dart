@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -164,17 +166,19 @@ class _MainScreenState extends State<_MainScreen> {
                       }
                     },
                     onLongPress: () {
-                      Clipboard.setData(ClipboardData(text: _linkMessage));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Copied Link!')),
-                      );
+                      if (_linkMessage != null) {
+                        Clipboard.setData(ClipboardData(text: _linkMessage!));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Copied Link!')),
+                        );
+                      }
                     },
                     child: Text(
                       _linkMessage ?? '',
                       style: const TextStyle(color: Colors.blue),
                     ),
                   ),
-                  Text(_linkMessage == null ? '' : _testString)
+                  Text(_linkMessage == null ? '' : _testString),
                 ],
               ),
             );

@@ -25,18 +25,24 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-  compileSdkVersion 31
+  namespace 'io.flutter.plugins.firebase.dynamiclinksexample'
 
-  lintOptions {
-    disable 'InvalidPackage'
-  }
+  compileSdk 34
 
   defaultConfig {
     applicationId "io.flutter.plugins.firebase.dynamiclinksexample"
-    minSdkVersion 19
-    targetSdkVersion 31
+    minSdk 19
+    targetSdk 33
     versionCode flutterVersionCode.toInteger()
     versionName flutterVersionName
+  }
+
+  buildFeatures {
+    buildConfig = true
+  }
+
+  lintOptions {
+    disable 'InvalidPackage'
   }
 
   buildTypes {

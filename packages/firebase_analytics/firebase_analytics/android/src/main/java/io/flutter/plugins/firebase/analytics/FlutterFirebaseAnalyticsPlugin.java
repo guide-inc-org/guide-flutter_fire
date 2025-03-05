@@ -136,6 +136,9 @@ public class FlutterFirebaseAnalyticsPlugin
       case "Analytics#getAppInstanceId":
         methodCallTask = handleGetAppInstanceId();
         break;
+      case "Analytics#getSessionId":
+        methodCallTask = handleGetSessionId();
+        break;
       default:
         result.notImplemented();
         return;
@@ -152,6 +155,21 @@ public class FlutterFirebaseAnalyticsPlugin
             result.error("firebase_analytics", message, null);
           }
         });
+  }
+
+  private Task<Long> handleGetSessionId() {
+    TaskCompletionSource<Long> taskCompletionSource = new TaskCompletionSource<>();
+
+    cachedThreadPool.execute(
+        () -> {
+          try {
+            taskCompletionSource.setResult(Tasks.await(analytics.getSessionId()));
+          } catch (Exception e) {
+            taskCompletionSource.setException(e);
+          }
+        });
+
+    return taskCompletionSource.getTask();
   }
 
   private Task<Void> handleLogEvent(final Map<String, Object> arguments) {
@@ -273,6 +291,10 @@ public class FlutterFirebaseAnalyticsPlugin
                 (Boolean) arguments.get(Constants.AD_STORAGE_CONSENT_GRANTED);
             final Boolean analyticsStorageGranted =
                 (Boolean) arguments.get(Constants.ANALYTICS_STORAGE_CONSENT_GRANTED);
+            final Boolean adPersonalizationSignalsGranted =
+                (Boolean) arguments.get(Constants.AD_PERSONALIZATION_SIGNALS_CONSENT_GRANTED);
+            final Boolean adUserDataGranted =
+                (Boolean) arguments.get(Constants.AD_USER_DATA_CONSENT_GRANTED);
             HashMap<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus> parameters =
                 new HashMap<>();
 
@@ -288,6 +310,22 @@ public class FlutterFirebaseAnalyticsPlugin
               parameters.put(
                   FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE,
                   analyticsStorageGranted
+                      ? FirebaseAnalytics.ConsentStatus.GRANTED
+                      : FirebaseAnalytics.ConsentStatus.DENIED);
+            }
+
+            if (adPersonalizationSignalsGranted != null) {
+              parameters.put(
+                  FirebaseAnalytics.ConsentType.AD_PERSONALIZATION,
+                  adPersonalizationSignalsGranted
+                      ? FirebaseAnalytics.ConsentStatus.GRANTED
+                      : FirebaseAnalytics.ConsentStatus.DENIED);
+            }
+
+            if (adUserDataGranted != null) {
+              parameters.put(
+                  FirebaseAnalytics.ConsentType.AD_USER_DATA,
+                  adUserDataGranted
                       ? FirebaseAnalytics.ConsentStatus.GRANTED
                       : FirebaseAnalytics.ConsentStatus.DENIED);
             }

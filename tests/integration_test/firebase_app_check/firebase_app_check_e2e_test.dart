@@ -24,7 +24,7 @@ void main() {
       test('activate', () async {
         await expectLater(
           FirebaseAppCheck.instance.activate(
-            webRecaptchaSiteKey: '6Lemcn0dAAAAABLkf6aiiHvpGD6x-zF3nOSDU2M8',
+            webProvider: ReCaptchaV3Provider('6Lemcn0dAAAAABLkf6aiiHvpGD6x-zF3nOSDU2M8'),
           ),
           completes,
         );
@@ -33,17 +33,15 @@ void main() {
       test(
         'getToken',
         () async {
-          final token = await FirebaseAppCheck.instance.getToken(true);
-          expect(token, isA<String>());
+          try {
+            await FirebaseAppCheck.instance.getToken(true);
+          } catch (exception) {
+            // Needs a debug token pasted in the Firebase console to work so we catch the exception.
+            expect(exception, isA<FirebaseException>());
+          }
+          // This will fail until this is resolved: https://github.com/dart-lang/sdk/issues/52572
         },
-        // Getting "Fetch server returned an HTTP error status. HTTP status:
-        // 400" when running tests on web.
-        //
-        // Is not working on iOS and macOS. Tracking issue:
-        // https://github.com/firebase/flutterfire/issues/8969
-        skip: kIsWeb ||
-            defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.macOS,
+        skip: kIsWeb,
       );
 
       test(
@@ -60,6 +58,20 @@ void main() {
         final stream = FirebaseAppCheck.instance.onTokenChange;
         expect(stream, isA<Stream<String?>>());
       });
+
+      test(
+        'getLimitedUseToken',
+        () async {
+          try {
+            await FirebaseAppCheck.instance.getLimitedUseToken();
+          } catch (exception) {
+            // Needs a debug token pasted in the Firebase console to work so we catch the exception.
+            expect(exception, isA<FirebaseException>());
+          }
+          // This will fail until this is resolved: https://github.com/dart-lang/sdk/issues/52572
+        },
+        skip: kIsWeb,
+      );
     },
   );
 }

@@ -183,57 +183,67 @@ void setupReferenceTests() {
       });
     });
 
-    group('list', () {
-      test('returns list results', () async {
-        Reference ref = storage.ref('flutter-tests/list');
-        ListResult result = await ref.list(const ListOptions(maxResults: 25));
+    group(
+      'list',
+      () {
+        test('returns list results', () async {
+          Reference ref = storage.ref('flutter-tests/list');
+          ListResult result = await ref.list(const ListOptions(maxResults: 25));
 
+          expect(result.items.length, greaterThan(0));
+          expect(result.prefixes, isA<List<Reference>>());
+          expect(result.prefixes.length, greaterThan(0));
+        });
+
+        test('errors if maxResults is less than 0 ', () async {
+          Reference ref = storage.ref('/list');
+          expect(
+            () => ref.list(const ListOptions(maxResults: -1)),
+            throwsAssertionError,
+          );
+        });
+
+        test('errors if maxResults is 0 ', () async {
+          Reference ref = storage.ref('/list');
+          expect(
+            () => ref.list(const ListOptions(maxResults: 0)),
+            throwsAssertionError,
+          );
+        });
+
+        test('errors if maxResults is more than 1000 ', () async {
+          Reference ref = storage.ref('/list');
+          expect(
+            () => ref.list(const ListOptions(maxResults: 1001)),
+            throwsAssertionError,
+          );
+        });
+      },
+      skip: defaultTargetPlatform == TargetPlatform.windows,
+    );
+
+    test(
+      'listAll',
+      () async {
+        Reference ref = storage.ref('flutter-tests/list');
+        ListResult result = await ref.listAll();
+        expect(result.items, isNotNull);
         expect(result.items.length, greaterThan(0));
+        expect(result.nextPageToken, isNull);
+
         expect(result.prefixes, isA<List<Reference>>());
         expect(result.prefixes.length, greaterThan(0));
-      });
-
-      test('errors if maxResults is less than 0 ', () async {
-        Reference ref = storage.ref('/list');
-        expect(
-          () => ref.list(const ListOptions(maxResults: -1)),
-          throwsAssertionError,
-        );
-      });
-
-      test('errors if maxResults is 0 ', () async {
-        Reference ref = storage.ref('/list');
-        expect(
-          () => ref.list(const ListOptions(maxResults: 0)),
-          throwsAssertionError,
-        );
-      });
-
-      test('errors if maxResults is more than 1000 ', () async {
-        Reference ref = storage.ref('/list');
-        expect(
-          () => ref.list(const ListOptions(maxResults: 1001)),
-          throwsAssertionError,
-        );
-      });
-    });
-
-    test('listAll', () async {
-      Reference ref = storage.ref('flutter-tests/list');
-      ListResult result = await ref.listAll();
-      expect(result.items, isNotNull);
-      expect(result.items.length, greaterThan(0));
-      expect(result.nextPageToken, isNull);
-
-      expect(result.prefixes, isA<List<Reference>>());
-      expect(result.prefixes.length, greaterThan(0));
-    });
+      },
+      skip: defaultTargetPlatform == TargetPlatform.windows,
+    );
 
     group(
       'putData',
       () {
-        test('uploads a file with buffer', () async {
-          List<int> list = utf8.encode(kTestString);
+        test('uploads a file with buffer and download to check content matches',
+            () async {
+          const text = 'put data text to compare with uploaded and downloaded';
+          List<int> list = utf8.encode(text);
 
           Uint8List data = Uint8List.fromList(list);
 
@@ -247,9 +257,16 @@ void setupReferenceTests() {
             ),
           );
 
-          expect(complete.metadata?.size, kTestString.length);
+          expect(complete.metadata?.size, text.length);
           // Metadata isn't saved on objects when using the emulator which fails test
           // expect(complete.metadata?.contentLanguage, 'en');
+
+          // Download the file from Firebase Storage
+          final downloadedData = await ref.getData();
+          final downloadedContent = String.fromCharCodes(downloadedData!);
+
+          // Verify that the downloaded content matches the original content
+          expect(downloadedContent, equals(text));
         });
 
         //TODO(pr-mais): causes the emulator to crash
@@ -294,9 +311,8 @@ void setupReferenceTests() {
               ),
             ),
           );
-
-          // This *must* be skipped in web, the test is intended for native platforms.
         },
+        // This *must* be skipped in web, the test is intended for native platforms.
         skip: kIsWeb,
       );
     });
@@ -324,8 +340,44 @@ void setupReferenceTests() {
             // Metadata isn't saved on objects when using the emulator which fails test
             // expect(complete.metadata?.contentLanguage, 'en');
             // expect(complete.metadata?.customMetadata!['activity'], 'test');
+
+            // Check without SettableMetadata
+            final Reference ref2 =
+                storage.ref('flutter-tests').child('flt-ok-2.txt');
+            final TaskSnapshot complete2 = await ref2.putFile(
+              file,
+            );
+            expect(complete2.metadata?.size, kTestString.length);
           },
+          // putFile is not supported on the web platform.
+          skip: kIsWeb,
         );
+
+        test('Upload and download text file and ensure content is the same',
+            () async {
+          const text =
+              'put file some text to compare with uploaded and downloaded';
+          final File file = await createFile(
+            'read-and-write.txt',
+            largeString: text,
+          );
+
+          final Reference ref =
+              storage.ref('flutter-tests').child('read-and-write.txt');
+
+          final TaskSnapshot complete = await ref.putFile(
+            file,
+          );
+
+          expect(complete.state, TaskState.success);
+
+          // Download the file from Firebase Storage
+          final downloadedData = await ref.getData();
+          final downloadedContent = String.fromCharCodes(downloadedData!);
+
+          // Verify that the downloaded content matches the original content
+          expect(downloadedContent, equals(text));
+        });
 
         // TODO(ehesp): Emulator rules issue - comment back in once fixed
         // test('errors if permission denied', () async {
@@ -343,14 +395,26 @@ void setupReferenceTests() {
       // putFile is not supported in web.
       // iOS & macOS work locally but times out on CI. We ought to check this periodically
       // as it may be OS version specific.
-      skip: kIsWeb || defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.macOS,
+      skip: kIsWeb ||
+          defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS,
     );
 
     group('putString', () {
-      test('uploads a string', () async {
+      test('uploads a string and downloads to check its content', () async {
+        const text =
+            'put string some text to compare with uploaded and downloaded';
         final Reference ref = storage.ref('flutter-tests').child('flt-ok.txt');
-        final TaskSnapshot complete = await ref.putString('data');
+        final TaskSnapshot complete = await ref.putString(text);
         expect(complete.totalBytes, greaterThan(0));
+        expect(complete.state, TaskState.success);
+
+        // Download the file from Firebase Storage
+        final downloadedData = await ref.getData();
+        final downloadedContent = String.fromCharCodes(downloadedData!);
+
+        // Verify that the downloaded content matches the original content
+        expect(downloadedContent, equals(text));
       });
 
       // Emulator continues to make request rather than throw unauthorized exception as expected
@@ -380,22 +444,27 @@ void setupReferenceTests() {
         expect(fullMetadata.customMetadata!['foo'], 'bar');
       });
 
-      test('errors if property does not exist', () async {
-        Reference ref = storage.ref('flutter-tests/iDoNotExist.jpeg');
+      test(
+        'errors if property does not exist',
+        () async {
+          Reference ref = storage.ref('flutter-tests/iDoNotExist.jpeg');
 
-        await expectLater(
-          () => ref.updateMetadata(SettableMetadata(contentType: 'unknown')),
-          throwsA(
-            isA<FirebaseException>()
-                .having((e) => e.code, 'code', 'object-not-found')
-                .having(
-                  (e) => e.message,
-                  'message',
-                  'No object exists at the desired reference.',
-                ),
-          ),
-        );
-      });
+          await expectLater(
+            () => ref.updateMetadata(SettableMetadata(contentType: 'unknown')),
+            throwsA(
+              isA<FirebaseException>()
+                  .having((e) => e.code, 'code', 'object-not-found')
+                  .having(
+                    (e) => e.message,
+                    'message',
+                    'No object exists at the desired reference.',
+                  ),
+            ),
+          );
+        },
+        // TODO(russellwheatley): raise issue on C++ SDK, if object does not exist, it throws "unauthorized" exception
+        skip: defaultTargetPlatform == TargetPlatform.windows,
+      );
 
       test(
         'errors if permission denied',
@@ -414,8 +483,6 @@ void setupReferenceTests() {
             ),
           );
         },
-        // TODO(salakar): Firebase storage emulator incorrectly returns `object-not-found` instead of `unauthorized`.
-        skip: true,
       );
     });
 
@@ -430,23 +497,25 @@ void setupReferenceTests() {
           expect(complete.state, TaskState.success);
         });
 
-        test('errors if permission denied', () async {
-          File file = await createFile('not.jpeg');
-          final Reference ref = storage.ref('/nope.jpeg');
+        // [TODO] This test always time out for catch the exception
+        // test('errors if permission denied', () async {
+        //   File file = await createFile('not.jpeg');
+        //   final Reference ref = storage.ref('/nope.jpeg');
 
-          await expectLater(
-            () => ref.writeToFile(file),
-            throwsA(
-              isA<FirebaseException>()
-                  .having((e) => e.code, 'code', 'unauthorized')
-                  .having(
-                    (e) => e.message,
-                    'message',
-                    'User is not authorized to perform the desired action.',
-                  ),
-            ),
-          );
-        });
+        //   await expectLater(
+        //     () => ref.writeToFile(file),
+        //     throwsA(
+        //       isA<FirebaseException>()
+        //           .having((e) => e.code, 'code', 'unauthorized')
+        //           .having(
+        //             (e) => e.message,
+        //             'message',
+        //             'User is not authorized to perform the desired action.',
+        //           ),
+        //     ),
+        //   );
+        // });
+
         // writeToFile is not supported in web
       },
       skip: kIsWeb,

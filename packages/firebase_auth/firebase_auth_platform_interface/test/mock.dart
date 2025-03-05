@@ -27,7 +27,9 @@ void handleEventChannel(
   final String name, [
   List<MethodCall>? log,
 ]) {
-  MethodChannel(name).setMockMethodCallHandler((MethodCall methodCall) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(MethodChannel(name),
+          (MethodCall methodCall) async {
     log?.add(methodCall);
     switch (methodCall.method) {
       case 'listen':
@@ -36,6 +38,7 @@ void handleEventChannel(
       default:
         return null;
     }
+    return null;
   });
 }
 
@@ -43,7 +46,8 @@ Future<void> injectEventChannelResponse(
   String channelName,
   Map<String, dynamic> event,
 ) async {
-  await ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+  await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .handlePlatformMessage(
     channelName,
     MethodChannelFirebaseAuth.channel.codec.encodeSuccessEnvelope(event),
     (_) {},
@@ -51,12 +55,15 @@ Future<void> injectEventChannelResponse(
 }
 
 void handleMethodCall(MethodCallCallback methodCallCallback) =>
-    MethodChannelFirebaseAuth.channel.setMockMethodCallHandler((call) async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(MethodChannelFirebaseAuth.channel,
+            (call) async {
       return await methodCallCallback(call);
     });
 
 Future<void> simulateEvent(String name, Map<String, dynamic>? user) async {
-  await ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+  await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .handlePlatformMessage(
     MethodChannelFirebaseAuth.channel.name,
     MethodChannelFirebaseAuth.channel.codec.encodeMethodCall(
       MethodCall(
@@ -77,16 +84,7 @@ Future<void> testExceptionHandling(
     anyOf([
       completes,
       if (type == 'PLATFORM' || type == 'EXCEPTION')
-        throwsA(isA<FirebaseAuthException>())
+        throwsA(isA<FirebaseAuthException>()),
     ]),
   );
-}
-
-Map<String, dynamic> generateUser(
-  Map<String, dynamic> user,
-  Map<String, dynamic> updatedInfo,
-) {
-  Map<String, dynamic> kMockUpdatedUser = Map<String, dynamic>.from(user);
-  kMockUpdatedUser.addAll(updatedInfo);
-  return kMockUpdatedUser;
 }

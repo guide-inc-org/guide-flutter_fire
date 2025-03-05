@@ -15,7 +15,7 @@ class OAuthProvider extends AuthProvider {
   OAuthProvider(String providerId) : super(providerId);
 
   List<String> _scopes = [];
-  Map<dynamic, dynamic> _parameters = {};
+  Map<String, String> _parameters = {};
 
   /// Returns the currently assigned scopes to this provider instance.
   List<String> get scopes {
@@ -23,7 +23,7 @@ class OAuthProvider extends AuthProvider {
   }
 
   /// Returns the parameters for this provider instance.
-  Map<dynamic, dynamic> get parameters {
+  Map<String, String> get parameters {
     return _parameters;
   }
 
@@ -42,7 +42,7 @@ class OAuthProvider extends AuthProvider {
   /// Sets the OAuth custom parameters to pass in a OAuth request for popup and
   /// redirect sign-in operations.
   OAuthProvider setCustomParameters(
-    Map<dynamic, dynamic> customOAuthParameters,
+    Map<String, String> customOAuthParameters,
   ) {
     _parameters = customOAuthParameters;
     return this;
@@ -81,6 +81,7 @@ class OAuthCredential extends AuthCredential {
     this.idToken,
     this.secret,
     this.rawNonce,
+    this.serverAuthCode,
   }) : super(
           providerId: providerId,
           signInMethod: signInMethod,
@@ -100,6 +101,9 @@ class OAuthCredential extends AuthCredential {
   /// must match the nonce field in the ID token.
   final String? rawNonce;
 
+  /// the server auth code for Play Games credential.
+  final String? serverAuthCode;
+
   @override
   Map<String, String?> asMap() {
     return <String, String?>{
@@ -109,6 +113,7 @@ class OAuthCredential extends AuthCredential {
       'accessToken': accessToken,
       'secret': secret,
       'rawNonce': rawNonce,
+      'serverAuthCode': serverAuthCode,
     };
   }
 }

@@ -1,3 +1,189 @@
+## 0.5.7+6
+
+ - Update a dependency to the latest release.
+
+## 0.5.7+5
+
+ - Update a dependency to the latest release.
+
+## 0.5.7+4
+
+ - Update a dependency to the latest release.
+
+## 0.5.7+3
+
+ - Update a dependency to the latest release.
+
+## 0.5.7+2
+
+ - Update a dependency to the latest release.
+
+## 0.5.7+1
+
+ - Update a dependency to the latest release.
+
+## 0.5.7
+
+ - **FEAT**(web): remove the dependency on `package:js` in favor of `dart:js_interop` ([#12534](https://github.com/firebase/flutterfire/issues/12534)). ([d83f6327](https://github.com/firebase/flutterfire/commit/d83f632753707c974fef2ac8a7f9bf6cb8ba8758))
+
+## 0.5.6
+
+ - **FEAT**(analytics): add consent mode v2 ([#12298](https://github.com/firebase/flutterfire/issues/12298)). ([19f3dbdd](https://github.com/firebase/flutterfire/commit/19f3dbdd197c57cf95853448f9541f6cebfe810c))
+ - **FEAT**(analytics,web): update web version to 0.5.1 ([#12490](https://github.com/firebase/flutterfire/issues/12490)). ([bd522fc8](https://github.com/firebase/flutterfire/commit/bd522fc86bcd16433b49d4ab46e62f9a530a1ddb))
+ - **FEAT**(analytics,web): migrate web to js_interop to be compatible with WASM ([#12206](https://github.com/firebase/flutterfire/issues/12206)). ([3a88eea4](https://github.com/firebase/flutterfire/commit/3a88eea40894dc4d5a35d477e7785f9499cb2cb1))
+
+## 0.5.5+22
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+21
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+20
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+19
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+18
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+17
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+16
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+15
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+14
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+13
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 0.5.5+12
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+11
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+10
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+9
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+8
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+7
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+6
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+5
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+4
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+3
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+2
+
+ - Update a dependency to the latest release.
+
+## 0.5.5+1
+
+ - Update a dependency to the latest release.
+
+## 0.5.5
+
+ - **FEAT**(firebase_analytics): support `getSessionId` for android and apple platforms ([#11478](https://github.com/firebase/flutterfire/issues/11478)). ([13aaf03d](https://github.com/firebase/flutterfire/commit/13aaf03dc2050514cea97023fae5c27491bcac8a))
+
+## 0.5.4+5
+
+ - Update a dependency to the latest release.
+
+## 0.5.4+4
+
+ - Update a dependency to the latest release.
+
+## 0.5.4+3
+
+ - Update a dependency to the latest release.
+
+## 0.5.4+2
+
+ - Update a dependency to the latest release.
+
+## 0.5.4+1
+
+ - Update a dependency to the latest release.
+
+## 0.5.4
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 0.5.3
+
+ - **FEAT**: upgrade to dart 3 compatible dependencies ([#10890](https://github.com/firebase/flutterfire/issues/10890)). ([4bd7e59b](https://github.com/firebase/flutterfire/commit/4bd7e59b1f2b09a2230c49830159342dd4592041))
+
+## 0.5.2+1
+
+ - Update a dependency to the latest release.
+
+## 0.5.2
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 0.5.1+14
+
+ - Update a dependency to the latest release.
+
+## 0.5.1+13
+
+ - Update a dependency to the latest release.
+
+## 0.5.1+12
+
+ - Update a dependency to the latest release.
+
+## 0.5.1+11
+
+ - Update a dependency to the latest release.
+
+## 0.5.1+10
+
+ - Update a dependency to the latest release.
+
+## 0.5.1+9
+
+ - Update a dependency to the latest release.
+
 ## 0.5.1+8
 
  - Update a dependency to the latest release.

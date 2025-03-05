@@ -4,25 +4,81 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:io';
+import 'dart:js_interop';
 
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:firebase_auth_web/src/firebase_auth_web_multi_factor.dart';
 import 'package:firebase_core_web/firebase_core_web_interop.dart'
     as core_interop;
+import 'package:firebase_core_web/firebase_core_web_interop.dart';
 
 import '../interop/auth.dart' as auth_interop;
 import '../interop/multi_factor.dart' as multi_factor_interop;
+
+bool _hasFirebaseAuthErrorCodeAndMessage(JSError e) {
+  if (e.name?.toDart == 'FirebaseError') {
+    String code = e.code?.toDart ?? '';
+    String message = e.message?.toDart ?? '';
+    if (!code.startsWith('auth/')) return false;
+    if (!message.contains('Firebase')) return false;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+R guardAuthExceptions<R>(
+  R Function() cb, {
+  auth_interop.Auth? auth,
+}) {
+  try {
+    final value = cb();
+    if (value is Future) {
+      return value.catchError((err, stack) {
+        final exception = getFirebaseAuthException(err, auth);
+        return Error.throwWithStackTrace(exception, stack);
+      }) as R;
+    }
+
+    return value;
+  } catch (e, stackTrace) {
+    final exception = e as JSError;
+    if (!_hasFirebaseAuthErrorCodeAndMessage(e)) {
+      // Not a firebase auth exception, rethrow & make sure to preserve the stacktrace
+      rethrow;
+    }
+
+    final error = getFirebaseAuthException(exception, auth);
+
+    Error.throwWithStackTrace(error, stackTrace);
+  }
+}
 
 /// Given a web error, an [Exception] is returned.
 ///
 /// The firebase-dart wrapper exposes a [core_interop.FirebaseError], allowing us to
 /// use the code and message and convert it into an expected [FirebaseAuthException].
 FirebaseAuthException getFirebaseAuthException(
-  Object exception, [
+  Object objectException, [
   auth_interop.Auth? auth,
 ]) {
-  if (exception is! core_interop.FirebaseError) {
+  final exception = objectException as JSError;
+  final authJsCredential =
+      auth_interop.OAuthProviderJsImpl.credentialFromError(exception);
+
+  OAuthCredential? credential;
+
+  if (authJsCredential != null) {
+    credential = OAuthProvider(authJsCredential.providerId.toDart).credential(
+      signInMethod: authJsCredential.signInMethod.toDart,
+      accessToken: authJsCredential.accessToken?.toDart,
+      secret: authJsCredential.secret?.toDart,
+      idToken: authJsCredential.idToken?.toDart,
+    );
+  }
+
+  if (!_hasFirebaseAuthErrorCodeAndMessage(exception)) {
     return FirebaseAuthException(
       code: 'unknown',
       message: 'An unknown error occurred: $exception',
@@ -30,11 +86,13 @@ FirebaseAuthException getFirebaseAuthException(
   }
 
   auth_interop.AuthError firebaseError = exception as auth_interop.AuthError;
-
-  String code = firebaseError.code.replaceFirst('auth/', '');
-  String message = firebaseError.message
+  String code = firebaseError.code.toDart.replaceFirst('auth/', '');
+  String message = firebaseError.message.toDart
       .replaceFirst(' (${firebaseError.code}).', '')
       .replaceFirst('Firebase: ', '');
+
+  // "customData" - see Firebase AuthError docs: https://firebase.google.com/docs/reference/js/auth.autherror
+  final customData = exception.customData as auth_interop.AuthErrorCustomData;
 
   if (code == 'multi-factor-auth-required') {
     final _auth = auth;
@@ -47,36 +105,17 @@ FirebaseAuthException getFirebaseAuthException(
     }
     final resolverWeb = multi_factor_interop.getMultiFactorResolver(
       _auth,
-      firebaseError as auth_interop.MultiFactorError,
+      exception as dynamic,
     );
 
     return FirebaseAuthMultiFactorExceptionPlatform(
       code: code,
       message: message,
-      email: firebaseError.email,
-      phoneNumber: firebaseError.phoneNumber,
-      tenantId: firebaseError.tenantId,
+      email: customData.email?.toDart,
+      phoneNumber: customData.phoneNumber?.toDart,
+      tenantId: customData.tenantId?.toDart,
       resolver: MultiFactorResolverWeb(
-        resolverWeb.hints.map((e) {
-          if (e is multi_factor_interop.PhoneMultiFactorInfo) {
-            return PhoneMultiFactorInfo(
-              displayName: e.displayName,
-              factorId: e.factorId,
-              enrollmentTimestamp:
-                  HttpDate.parse(e.enrollmentTime).millisecondsSinceEpoch /
-                      1000,
-              uid: e.uid,
-              phoneNumber: e.phoneNumber,
-            );
-          }
-          return MultiFactorInfo(
-            displayName: e.displayName,
-            factorId: e.factorId,
-            enrollmentTimestamp:
-                HttpDate.parse(e.enrollmentTime).millisecondsSinceEpoch / 1000,
-            uid: e.uid,
-          );
-        }).toList(),
+        resolverWeb.hints.map(fromInteropMultiFactorInfo).toList(),
         MultiFactorSessionWeb('web', resolverWeb.session),
         FirebaseAuthWeb.instance,
         resolverWeb,
@@ -88,9 +127,40 @@ FirebaseAuthException getFirebaseAuthException(
   return FirebaseAuthException(
     code: code,
     message: message,
-    email: firebaseError.email,
-    phoneNumber: firebaseError.phoneNumber,
-    tenantId: firebaseError.tenantId,
+    email: customData.email?.toDart,
+    phoneNumber: customData.phoneNumber?.toDart,
+    tenantId: customData.tenantId?.toDart,
+    credential: credential,
+  );
+}
+
+MultiFactorInfo fromInteropMultiFactorInfo(
+  multi_factor_interop.MultiFactorInfo e,
+) {
+  if (e is multi_factor_interop.PhoneMultiFactorInfo) {
+    return PhoneMultiFactorInfo(
+      displayName: e.displayName,
+      factorId: e.factorId,
+      enrollmentTimestamp:
+          HttpDate.parse(e.enrollmentTime).millisecondsSinceEpoch / 1000,
+      uid: e.uid,
+      phoneNumber: e.phoneNumber,
+    );
+  } else if (e is multi_factor_interop.TotpMultiFactorInfo) {
+    return TotpMultiFactorInfo(
+      displayName: e.displayName,
+      factorId: e.factorId,
+      enrollmentTimestamp:
+          HttpDate.parse(e.enrollmentTime).millisecondsSinceEpoch / 1000,
+      uid: e.uid,
+    );
+  }
+  return MultiFactorInfo(
+    displayName: e.displayName,
+    factorId: e.factorId,
+    enrollmentTimestamp:
+        HttpDate.parse(e.enrollmentTime).millisecondsSinceEpoch / 1000,
+    uid: e.uid,
   );
 }
 
@@ -101,10 +171,13 @@ ActionCodeInfo? convertWebActionCodeInfo(
     return null;
   }
 
-  return ActionCodeInfo(operation: 0, data: <String, dynamic>{
-    'email': webActionCodeInfo.data.email,
-    'previousEmail': webActionCodeInfo.data.previousEmail,
-  });
+  return ActionCodeInfo(
+    operation: ActionCodeInfoOperation.passwordReset,
+    data: ActionCodeInfoData(
+      email: webActionCodeInfo.data.email?.toDart,
+      previousEmail: webActionCodeInfo.data.previousEmail?.toDart,
+    ),
+  );
 }
 
 /// Converts a [auth_interop.AdditionalUserInfo] into a [AdditionalUserInfo].
@@ -127,16 +200,17 @@ AdditionalUserInfo? convertWebAdditionalUserInfo(
 IdTokenResult convertWebIdTokenResult(
   auth_interop.IdTokenResult webIdTokenResult,
 ) {
-  return IdTokenResult(<String, dynamic>{
-    'claims': webIdTokenResult.claims,
-    'expirationTimestamp':
-        webIdTokenResult.expirationTime.millisecondsSinceEpoch,
-    'issuedAtTimestamp': webIdTokenResult.issuedAtTime.millisecondsSinceEpoch,
-    'authTimestamp': webIdTokenResult.authTime.millisecondsSinceEpoch,
-    'signInProvider': webIdTokenResult.signInProvider,
-    'signInSecondFactor': null,
-    'token': webIdTokenResult.token,
-  });
+  return IdTokenResult(
+    PigeonIdTokenResult(
+      claims: webIdTokenResult.claims,
+      token: webIdTokenResult.token,
+      authTimestamp: webIdTokenResult.authTime.millisecondsSinceEpoch,
+      issuedAtTimestamp: webIdTokenResult.issuedAtTime.millisecondsSinceEpoch,
+      expirationTimestamp:
+          webIdTokenResult.expirationTime.millisecondsSinceEpoch,
+      signInProvider: webIdTokenResult.signInProvider,
+    ),
+  );
 }
 
 /// Converts a [ActionCodeSettings] into a [auth_interop.ActionCodeSettings].
@@ -152,14 +226,14 @@ auth_interop.ActionCodeSettings? convertPlatformActionCodeSettings(
 
   if (actionCodeSettings.dynamicLinkDomain != null) {
     webActionCodeSettings = auth_interop.ActionCodeSettings(
-      url: actionCodeSettings.url,
-      handleCodeInApp: actionCodeSettings.handleCodeInApp,
-      dynamicLinkDomain: actionCodeSettings.dynamicLinkDomain,
+      url: actionCodeSettings.url.toJS,
+      handleCodeInApp: actionCodeSettings.handleCodeInApp.toJS,
+      dynamicLinkDomain: actionCodeSettings.dynamicLinkDomain?.toJS,
     );
   } else {
     webActionCodeSettings = auth_interop.ActionCodeSettings(
-      url: actionCodeSettings.url,
-      handleCodeInApp: actionCodeSettings.handleCodeInApp,
+      url: actionCodeSettings.url.toJS,
+      handleCodeInApp: actionCodeSettings.handleCodeInApp.toJS,
     );
   }
 
@@ -276,8 +350,8 @@ AuthCredential? convertWebAuthCredential(
   }
 
   return AuthCredential(
-    providerId: authCredential.providerId,
-    signInMethod: authCredential.signInMethod,
+    providerId: authCredential.providerId.toDart,
+    signInMethod: authCredential.signInMethod.toDart,
   );
 }
 
@@ -297,11 +371,11 @@ AuthCredential? convertWebOAuthCredential(
     return null;
   }
 
-  return OAuthProvider(authCredential.providerId).credential(
-    signInMethod: authCredential.signInMethod,
-    accessToken: authCredential.accessToken,
-    secret: authCredential.secret,
-    idToken: authCredential.idToken,
+  return OAuthProvider(authCredential.providerId.toDart).credential(
+    signInMethod: authCredential.signInMethod.toDart,
+    accessToken: authCredential.accessToken?.toDart,
+    secret: authCredential.secret?.toDart,
+    idToken: authCredential.idToken?.toDart,
   );
 }
 
@@ -355,9 +429,9 @@ auth_interop.OAuthCredential? convertPlatformCredential(
   if (credential is OAuthCredential) {
     auth_interop.OAuthCredentialOptions credentialOptions =
         auth_interop.OAuthCredentialOptions(
-      accessToken: credential.accessToken,
-      rawNonce: credential.rawNonce,
-      idToken: credential.idToken,
+      accessToken: credential.accessToken?.toJS,
+      rawNonce: credential.rawNonce?.toJS,
+      idToken: credential.idToken?.toJS,
     );
     return auth_interop.OAuthProvider(credential.providerId)
         .credential(credentialOptions);

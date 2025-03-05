@@ -1,3 +1,179 @@
+## 0.2.5+6
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+5
+
+ - **FIX**(database,web): Stop transaction & stream handling exceptions from throwing twice ([#12706](https://github.com/firebase/flutterfire/issues/12706)). ([9b3244f7](https://github.com/firebase/flutterfire/commit/9b3244f7f328095fd5887aac25debe77ecf3e569))
+
+## 0.2.5+4
+
+ - Update a dependency to the latest release.
+
+## 0.2.5+3
+
+ - **FIX**(database,web): Fix exceptions being converted into lowercase ([#12661](https://github.com/firebase/flutterfire/issues/12661)). ([f9f46a53](https://github.com/firebase/flutterfire/commit/f9f46a53e022503455e637c7fda08765888d9b13))
+
+## 0.2.5+2
+
+ - **FIX**(database,web): fix broken exception handling on streams ([#12647](https://github.com/firebase/flutterfire/issues/12647)). ([0115f79d](https://github.com/firebase/flutterfire/commit/0115f79d2eb539205101070eb3b329165c9e4e61))
+
+## 0.2.5+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.5
+
+ - **FEAT**(web): remove the dependency on `package:js` in favor of `dart:js_interop` ([#12534](https://github.com/firebase/flutterfire/issues/12534)). ([d83f6327](https://github.com/firebase/flutterfire/commit/d83f632753707c974fef2ac8a7f9bf6cb8ba8758))
+
+## 0.2.4
+
+ - **FEAT**(database,web): migrate web to `js_interop` to be compatible with WASM ([#12530](https://github.com/firebase/flutterfire/issues/12530)). ([07b594f7](https://github.com/firebase/flutterfire/commit/07b594f776bbb7e93de42cb466235b7198150186))
+
+## 0.2.3+26
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+25
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+24
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+23
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+22
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+21
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+20
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+19
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+18
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+17
+
+ - **DOCS**: change old documentation links of packages in README files ([#12136](https://github.com/firebase/flutterfire/issues/12136)). ([24b9ac7e](https://github.com/firebase/flutterfire/commit/24b9ac7ec29fc9ca466c0941c2cff26d75b8568d))
+
+## 0.2.3+16
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+15
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+14
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+13
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+12
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+11
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+10
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+9
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+8
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+7
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+6
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+5
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+4
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+3
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+2
+
+ - Update a dependency to the latest release.
+
+## 0.2.3+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.3
+
+ - **FEAT**: update dependency constraints to `sdk: '>=2.18.0 <4.0.0'` `flutter: '>=3.3.0'` ([#10946](https://github.com/firebase/flutterfire/issues/10946)). ([2772d10f](https://github.com/firebase/flutterfire/commit/2772d10fe510dcc28ec2d37a26b266c935699fa6))
+
+## 0.2.2+2
+
+ - Update a dependency to the latest release.
+
+## 0.2.2+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.2
+
+ - **FEAT**: bump dart sdk constraint to 2.18 ([#10618](https://github.com/firebase/flutterfire/issues/10618)). ([f80948a2](https://github.com/firebase/flutterfire/commit/f80948a28b62eead358bdb900d5a0dfb97cebb33))
+
+## 0.2.1+25
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+24
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+23
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+22
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+21
+
+ - Update a dependency to the latest release.
+
+## 0.2.1+20
+
+ - Update a dependency to the latest release.
+
 ## 0.2.1+19
 
  - Update a dependency to the latest release.

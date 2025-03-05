@@ -3,6 +3,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:js_interop';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
@@ -26,15 +27,15 @@ import 'src/write_batch_web.dart';
 /// Web implementation for [FirebaseFirestorePlatform]
 /// delegates calls to firestore web plugin
 class FirebaseFirestoreWeb extends FirebaseFirestorePlatform {
-  /// instance of Analytics from the web plugin
+  /// instance of Firestore from the web plugin
   firestore_interop.Firestore? _webFirestore;
 
-  firestore_interop.Settings? _settings;
+  firestore_interop.FirestoreSettings? _settings;
 
   /// Lazily initialize [_webFirestore] on first method call
   firestore_interop.Firestore get _delegate {
     return _webFirestore ??= firestore_interop.getFirestoreInstance(
-        core_interop.app(app.name), _settings);
+        core_interop.app(app.name), _settings, databaseId);
   }
 
   /// Called by PluginRegistry to register this plugin for Flutter Web
@@ -45,14 +46,15 @@ class FirebaseFirestoreWeb extends FirebaseFirestorePlatform {
 
   /// Builds an instance of [FirebaseFirestoreWeb] with an optional [FirebaseApp] instance
   /// If [app] is null then the created instance will use the default [FirebaseApp]
-  FirebaseFirestoreWeb({FirebaseApp? app}) : super(appInstance: app) {
+  FirebaseFirestoreWeb({FirebaseApp? app, String? databaseId})
+      : super(appInstance: app, databaseChoice: databaseId) {
     FieldValueFactoryPlatform.instance = FieldValueFactoryWeb();
   }
 
   @override
   FirebaseFirestorePlatform delegateFor(
-      {/*required*/ required FirebaseApp app}) {
-    return FirebaseFirestoreWeb(app: app);
+      {required FirebaseApp app, required String databaseId}) {
+    return FirebaseFirestoreWeb(app: app, databaseId: databaseId);
   }
 
   @override
@@ -128,27 +130,29 @@ class FirebaseFirestoreWeb extends FirebaseFirestorePlatform {
 
   @override
   set settings(Settings settings) {
-    int? cacheSizeBytes;
-    if (settings.cacheSizeBytes == null) {
-      cacheSizeBytes = 40000000;
-    } else if (settings.cacheSizeBytes == Settings.CACHE_SIZE_UNLIMITED) {
-      // https://github.com/firebase/firebase-js-sdk/blob/e67affba53a53d28492587b2f60521a00166db60/packages/firestore/src/local/lru_garbage_collector.ts#L175
-      cacheSizeBytes = -1;
+    // Union type MemoryLocalCache | PersistentLocalCache
+    dynamic localCache;
+    final persistenceEnabled = settings.persistenceEnabled;
+    if (persistenceEnabled == null || persistenceEnabled == false) {
+      localCache = firestore_interop.memoryLocalCache(null);
     } else {
-      cacheSizeBytes = settings.cacheSizeBytes;
+      localCache = firestore_interop
+          .persistentLocalCache(firestore_interop.PersistentCacheSettings(
+        cacheSizeBytes: settings.cacheSizeBytes?.toJS,
+      ));
     }
 
     if (settings.host != null && settings.sslEnabled != null) {
-      _settings = firestore_interop.Settings(
-        cacheSizeBytes: cacheSizeBytes,
-        host: settings.host,
-        ssl: settings.sslEnabled,
-        ignoreUndefinedProperties: settings.ignoreUndefinedProperties,
+      _settings = firestore_interop.FirestoreSettings(
+        localCache: localCache,
+        host: settings.host?.toJS,
+        ssl: settings.sslEnabled?.toJS,
+        ignoreUndefinedProperties: settings.ignoreUndefinedProperties.toJS,
       );
     } else {
-      _settings = firestore_interop.Settings(
-        cacheSizeBytes: cacheSizeBytes,
-        ignoreUndefinedProperties: settings.ignoreUndefinedProperties,
+      _settings = firestore_interop.FirestoreSettings(
+        localCache: localCache,
+        ignoreUndefinedProperties: settings.ignoreUndefinedProperties.toJS,
       );
     }
   }
@@ -159,7 +163,7 @@ class FirebaseFirestoreWeb extends FirebaseFirestorePlatform {
     if (settings != null) {
       firestore_interop.PersistenceSettings interopSettings =
           firestore_interop.PersistenceSettings(
-              synchronizeTabs: settings.synchronizeTabs);
+              synchronizeTabs: settings.synchronizeTabs.toJS);
 
       return convertWebExceptions(
           () => _delegate.enablePersistence(interopSettings));
@@ -195,9 +199,7 @@ class FirebaseFirestoreWeb extends FirebaseFirestorePlatform {
     return convertWebQuerySnapshot(
       this,
       snapshot,
-      getServerTimestampBehaviorString(
-        options.serverTimestampBehavior,
-      ),
+      options.serverTimestampBehavior,
     );
   }
 
@@ -206,5 +208,16 @@ class FirebaseFirestoreWeb extends FirebaseFirestorePlatform {
     return _delegate.setIndexConfiguration(
       indexConfiguration,
     );
+  }
+
+  @override
+  Future<void> setLoggingEnabled(bool enabled) async {
+    late final String value;
+    if (enabled) {
+      value = 'debug';
+    } else {
+      value = 'silent';
+    }
+    _delegate.setLoggingEnabled(value);
   }
 }
