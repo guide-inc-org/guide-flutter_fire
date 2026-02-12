@@ -19,10 +19,26 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  firebase_core: ^4.4.0
-  firebase_core_platform_interface: ^6.0.2
-  firebase_remote_config_platform_interface: ^2.0.7
-  firebase_remote_config_web: ^1.10.3
+  firebase_core:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core_platform_interface
+  firebase_remote_config_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_remote_config/firebase_remote_config_platform_interface
+  firebase_remote_config_web:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_remote_config/firebase_remote_config_web
   flutter:
     sdk: flutter
 

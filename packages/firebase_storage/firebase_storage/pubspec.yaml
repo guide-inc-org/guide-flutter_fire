@@ -19,10 +19,26 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  firebase_core: ^4.4.0
-  firebase_core_platform_interface: ^6.0.2
-  firebase_storage_platform_interface: ^5.2.17
-  firebase_storage_web: ^3.11.2
+  firebase_core:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core_platform_interface
+  firebase_storage_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_storage/firebase_storage_platform_interface
+  firebase_storage_web:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_storage/firebase_storage_web
   flutter:
     sdk: flutter
 

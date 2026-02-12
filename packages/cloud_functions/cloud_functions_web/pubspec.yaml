@@ -10,9 +10,21 @@ environment:
   flutter: '>=3.22.0'
 
 dependencies:
-  cloud_functions_platform_interface: ^5.8.9
-  firebase_core: ^4.4.0
-  firebase_core_web: ^3.4.0
+  cloud_functions_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/cloud_functions/cloud_functions_platform_interface
+  firebase_core:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core
+  firebase_core_web:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core_web
   flutter:
     sdk: flutter
   flutter_web_plugins:
@@ -20,7 +32,11 @@ dependencies:
   web: ^1.1.1
 
 dev_dependencies:
-  firebase_core_platform_interface: ^6.0.2
+  firebase_core_platform_interface:
+    git:
+      url: https://github.com/guide-inc-org/guide-flutter_fire.git
+      ref: kcfx/v4.4.0+1
+      path: packages/firebase_core/firebase_core_platform_interface
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0
