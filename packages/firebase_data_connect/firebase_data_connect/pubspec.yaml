@@ -14,22 +14,22 @@ dependencies:
   firebase_app_check:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_app_check/firebase_app_check
   firebase_auth:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_auth/firebase_auth
   firebase_core:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_core/firebase_core
   firebase_core_platform_interface:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_core/firebase_core_platform_interface
   flutter:
     sdk: flutter
@@ -43,12 +43,12 @@ dev_dependencies:
   firebase_app_check_platform_interface:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_app_check/firebase_app_check_platform_interface
   firebase_auth_platform_interface:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_auth/firebase_auth_platform_interface
   flutter_lints: ^4.0.0
   flutter_test:

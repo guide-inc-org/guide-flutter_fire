@@ -12,17 +12,17 @@ dependencies:
   firebase_core:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_core/firebase_core
   firebase_core_web:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_core/firebase_core_web
   firebase_database_platform_interface:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_database/firebase_database_platform_interface
   flutter:
     sdk: flutter
@@ -33,7 +33,7 @@ dev_dependencies:
   firebase_core_platform_interface:
     git:
       url: https://github.com/guide-inc-org/guide-flutter_fire.git
-      ref: kcfx/v4.4.0+1
+      ref: kcsta/v4.4.0+1
       path: packages/firebase_core/firebase_core_platform_interface
   flutter_test:
     sdk: flutter
